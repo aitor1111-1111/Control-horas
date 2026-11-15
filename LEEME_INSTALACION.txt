@@ -1,0 +1,38 @@
+CONTROL DE HORAS Y PRODUCTIVIDAD — VERSIÓN MÓVIL
+==================================================
+
+Esta carpeta contiene una aplicación web progresiva (PWA) para Android.
+Se puede instalar desde Chrome en la pantalla de inicio y utilizar sin conexión
+después de abrirla una primera vez.
+
+FUNCIONES
+- Fecha y día asociados al registro.
+- Horas: 27 €/hora.
+- Horas extras: 32 €/hora.
+- Productividad: 273 € por servicio.
+- Productividad especial: 303 € por jornada fija de 8 horas.
+- Resumen mensual, anual y de todo el historial.
+- Separación entre cobrado y pendiente de cobro.
+- Exportación CSV compatible con Excel.
+- Copia de seguridad y restauración.
+- Datos almacenados localmente en el dispositivo.
+
+IMPORTANTE: cómo instalarla en Android
+1. La PWA debe estar publicada en una dirección HTTPS para que Chrome permita
+   instalarla correctamente. El ZIP por sí solo no es un instalador APK.
+2. Sube el contenido de esta carpeta a un alojamiento HTTPS estático
+   (por ejemplo, un sitio de GitHub Pages o un hosting propio).
+3. Abre la dirección HTTPS en Google Chrome en el móvil.
+4. Pulsa el menú ⋮ de Chrome y elige "Instalar aplicación" o
+   "Añadir a pantalla de inicio".
+5. Confirma. Aparecerá el icono "Control Horas" como una aplicación.
+
+DATOS
+Los registros se guardan en el almacenamiento local del navegador de ese móvil.
+No se sincronizan automáticamente con el programa de Windows ni con otros móviles.
+Usa "Copia de seguridad" con regularidad y guarda el JSON en un lugar seguro.
+
+NOTA DE TARIFAS
+Productividad se contabiliza como 273 € por servicio, independientemente de las
+horas introducidas; las horas se conservan como dato informativo.
+Productividad especial se fija en 8 horas y 303 €.
