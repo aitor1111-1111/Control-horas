@@ -1,54 +1,26 @@
-CONTROL DE HORAS Y PRODUCTIVIDAD — VERSIÓN MÓVIL
-==================================================
+CONTROL DE HORAS Y PRODUCTIVIDAD - ACTUALIZACIÓN 2026.11.16.4
 
-Esta carpeta contiene una aplicación web progresiva (PWA) para Android.
-Se puede instalar desde Chrome en la pantalla de inicio y utilizar sin conexión
-después de abrirla una primera vez.
+CONTENIDO
+- index.html: aplicación web.
+- sw.js: actualización de caché y service worker.
+- manifest.webmanifest: configuración instalable.
+- icon-192.png e icon-512.png: iconos.
 
-FUNCIONES
-- Fecha y día asociados al registro.
-- Hora extra normal (nivel 19): 28,29 €/hora.
-- Hora extra festiva (nivel 19): 32,30 €/hora.
-- Productividad (nivel 19): 279,28 € por servicio.
-- Productividad especial (nivel 19): 303,28 € por servicio.
-- Productividad agravada (nivel 19): 367,28 € por servicio.
-- Festivo, categoría Básica: 303,48 € por servicio.
-- Festivo especial, categoría Básica: 379,35 € por servicio.
-- Resumen mensual, anual y de todo el historial.
-- Separación entre cobrado y pendiente de cobro.
-- Exportación CSV compatible con Excel.
-- Copia de seguridad y restauración.
-- Datos almacenados localmente en el dispositivo.
+TARIFAS CONFIGURADAS
+- Hora extra normal: 28,29 €/hora.
+- Hora extra festiva: 32,30 €/hora.
+- Productividad: 279,28 €/servicio.
+- Productividad especial: 303,28 €/servicio.
+- Productividad agravada: 367,28 €/servicio.
+- Festivo (Básica): 303,48 €/servicio.
+- Festivo especial (Básica): 379,35 €/servicio.
 
-IMPORTANTE: cómo instalarla en Android
-1. La PWA debe estar publicada en una dirección HTTPS para que Chrome permita
-   instalarla correctamente. El ZIP por sí solo no es un instalador APK.
-2. Sube el contenido de esta carpeta a un alojamiento HTTPS estático
-   (por ejemplo, un sitio de GitHub Pages o un hosting propio).
-3. Abre la dirección HTTPS en Google Chrome en el móvil.
-4. Pulsa el menú ⋮ de Chrome y elige "Instalar aplicación" o
-   "Añadir a pantalla de inicio".
-5. Confirma. Aparecerá el icono "Control Horas" como una aplicación.
+CÁLCULO
+Las dos horas extraordinarias se calculan multiplicando el número de horas por su tarifa horaria.
+Productividad y festivos se calculan multiplicando el número de servicios/eventos por la tarifa por servicio.
+
+ACTUALIZACIÓN
+Subir los seis archivos a la raíz del repositorio GitHub Pages y confirmar el commit. Mantener el mismo repositorio y URL. Tras publicar, cerrar por completo la PWA y las pestañas del sitio, volver a abrir la URL y esperar a que se active el nuevo service worker.
 
 DATOS
-Los registros se guardan en el almacenamiento local del navegador de ese móvil.
-No se sincronizan automáticamente con el programa de Windows ni con otros móviles.
-Usa "Copia de seguridad" con regularidad y guarda el JSON en un lugar seguro.
-
-NOTA DE TARIFAS
-Las horas extraordinarias se calculan por hora. Productividad y festivos se
-contabilizan por servicio/evento; las horas introducidas son informativas.
-Productividad especial conserva el registro de jornada fija de 8 horas.
-Las tarifas se han tomado de los documentos retributivos aportados: nivel 19
-para horas y productividad, y categoría Básica para festivos.
-
-
-ACTUALIZACION DE TARIFAS 2026
-- Hora extra normal: 28,29 EUR/h (nivel 19).
-- Hora extra festiva: 32,30 EUR/h (nivel 19).
-- Productividad: 279,28 EUR/servicio (nivel 19).
-- Productividad especial: 303,28 EUR/servicio (nivel 19).
-- Productividad agravada: 367,28 EUR/servicio (nivel 19).
-- Festivo: 303,48 EUR/servicio (categoria Basica).
-- Festivo especial: 379,35 EUR/servicio (categoria Basica).
-El selector muestra la tarifa junto al nombre. El resumen desglosa tarifa y total acumulado por concepto.
+Los registros siguen guardándose localmente con la clave horas_productividad_v1 para conservar los registros previos del navegador. Antes de actualizar, exportar una copia desde «Copia de seguridad». No borrar datos del sitio ni desinstalar la aplicación.

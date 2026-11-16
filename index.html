@@ -5,37 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#17365d">
 <meta name="description" content="Registro personal de horas extraordinarias y productividad">
+<meta name="application-version" content="2026.11.16.4">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <title>Control de Horas</title>
 <style>
 :root{--navy:#17365d;--blue:#2864a5;--bg:#f2f5f9;--card:#fff;--text:#172333;--muted:#64748b;--green:#087443;--line:#e3e9f0;--red:#b42318}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px system-ui,-apple-system,"Segoe UI",sans-serif}
-header{background:var(--navy);color:white;padding:22px 18px 20px;border-radius:0 0 20px 20px}
-header h1{font-size:21px;margin:0 0 5px}header p{margin:0;color:#dce7f5;font-size:13px}
-main{max-width:760px;margin:auto;padding:14px 13px 36px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px;margin:12px 0;box-shadow:0 2px 8px #152b4610}
-h2{font-size:16px;margin:0 0 13px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-label{display:block;font-size:12px;color:var(--muted);font-weight:650;margin:8px 0 5px}
-input,select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:12px;font:inherit;background:white;color:var(--text);min-height:44px}
-input:disabled{background:#eef2f6;color:#64748b}
-button{border:0;border-radius:11px;padding:12px 14px;font:600 14px system-ui;cursor:pointer}
-.primary{background:var(--blue);color:white;width:100%;margin-top:13px}.secondary{background:#eaf0f7;color:var(--navy)}.danger{background:#fff0ef;color:var(--red)}
-.amount{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
-.amount strong{font-size:22px;color:var(--green)}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.stat{background:#f7f9fc;border-radius:12px;padding:12px}.stat small{display:block;color:var(--muted);font-size:12px}.stat b{font-size:20px;display:block;margin-top:3px}
-.tabs{display:flex;gap:7px;overflow:auto;margin:12px 0}.tabs button{white-space:nowrap}
-.active{background:var(--navy);color:white}
-.entry{border-top:1px solid var(--line);padding:12px 0;display:flex;gap:8px;align-items:center;justify-content:space-between}
-.entry:first-child{border-top:0}.entry b{display:block;font-size:14px}.entry small{color:var(--muted);font-size:12px}.entry .right{text-align:right;white-space:nowrap}.entry .right strong{display:block}
-.pill{font-size:11px;border-radius:20px;padding:3px 7px;background:#e8f5ee;color:var(--green)}
-.pill.pending{background:#fff4dd;color:#8a5700}
-.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1}
-.muted{color:var(--muted);font-size:12px;line-height:1.45}
-.hidden{display:none!important}
-.rate-list{display:grid;gap:8px;margin-top:12px}.rate-row{display:flex;justify-content:space-between;gap:12px;padding:9px 10px;background:#f7f9fc;border-radius:10px;font-size:13px}.rate-row span{color:var(--muted)}.rate-row strong{white-space:nowrap;color:var(--green)}.rate-row em{font-style:normal;color:var(--muted);font-size:11px;display:block;margin-top:2px}
-@media(min-width:600px){.grid{grid-template-columns:repeat(3,1fr)}}
+header{background:var(--navy);color:white;padding:24px 18px 22px;border-radius:0 0 22px 22px}header h1{font-size:22px;margin:0 0 5px}header p{margin:0;color:#dce7f5;font-size:14px;line-height:1.4}
+main{max-width:760px;margin:auto;padding:14px 13px 36px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 2px 8px #152b4610}
+h2{font-size:18px;margin:0 0 14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}label{display:block;font-size:13px;color:var(--muted);font-weight:650;margin:8px 0 5px}
+input,select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:11px;padding:13px;font:inherit;background:white;color:var(--text);min-height:48px}input:disabled{background:#eef2f6;color:#64748b}
+button{border:0;border-radius:11px;padding:12px 14px;font:600 14px system-ui;cursor:pointer}.primary{background:var(--blue);color:white;width:100%;margin-top:14px;min-height:50px}.secondary{background:#eaf0f7;color:var(--navy)}.danger{background:#fff0ef;color:var(--red)}
+.amount{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px;padding-top:13px;border-top:1px solid var(--line)}.amount strong{font-size:25px;color:var(--green);white-space:nowrap}.muted{color:var(--muted);font-size:13px;line-height:1.45}
+.rate-chip{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#edf4fb;border:1px solid #d8e6f5;border-radius:12px;padding:11px 12px;margin-top:12px}.rate-chip span{color:var(--muted);font-size:13px}.rate-chip strong{color:var(--navy);font-size:16px;white-space:nowrap}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:9px}.stat{background:#f7f9fc;border-radius:12px;padding:12px}.stat small{display:block;color:var(--muted);font-size:12px}.stat b{font-size:20px;display:block;margin-top:3px}
+.tabs{display:flex;gap:7px;overflow:auto;margin:12px 0}.tabs button{white-space:nowrap}.active{background:var(--navy);color:white}
+.entry{border-top:1px solid var(--line);padding:12px 0;display:flex;gap:8px;align-items:center;justify-content:space-between}.entry:first-child{border-top:0}.entry b{display:block;font-size:14px}.entry small{color:var(--muted);font-size:12px}.entry .right{text-align:right;white-space:nowrap}.entry .right strong{display:block}.pill{font-size:11px;border-radius:20px;padding:3px 7px;background:#e8f5ee;color:var(--green)}.pill.pending{background:#fff4dd;color:#8a5700}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1}.hidden{display:none!important}
+.rate-list{display:grid;gap:8px;margin-top:12px}.rate-row{display:flex;justify-content:space-between;gap:12px;padding:10px;background:#f7f9fc;border-radius:10px;font-size:13px}.rate-row strong{white-space:nowrap;color:var(--green)}.rate-row em{font-style:normal;color:var(--muted);font-size:11px;display:block;margin-top:2px}
+@media(max-width:380px){.grid{grid-template-columns:1fr}.amount strong{font-size:22px}}
+@media(min-width:600px){.grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -44,155 +33,102 @@ button{border:0;border-radius:11px;padding:12px 14px;font:600 14px system-ui;cur
 <section class="card">
 <h2>Nuevo servicio</h2>
 <div class="grid">
-<div><label for="date">Fecha</label><input id="date" type="date"></div>
-<div><label for="concept">Tipo de servicio</label><select id="concept">
-<option value="Hora extra normal">Hora extra normal · 28,29 €/hora</option>
-<option value="Hora extra festiva">Hora extra festiva · 32,30 €/hora</option>
-<option value="Productividad">Productividad · 279,28 €/servicio</option>
-<option value="Productividad especial">Productividad especial · 303,28 €/servicio</option>
-<option value="Productividad agravada">Productividad agravada · 367,28 €/servicio</option>
-<option value="Festivo">Festivo · 303,48 €/servicio</option>
-<option value="Festivo especial">Festivo especial · 379,35 €/servicio</option>
-</select></div>
-<div><label for="hours">Número de horas</label><input id="hours" type="number" min="0.25" step="0.25" value="1" inputmode="decimal"></div>
+ <div><label for="date">Fecha</label><input id="date" type="date"></div>
+ <div><label for="concept">Tipo de servicio</label><select id="concept">
+  <option value="Hora extra normal">Hora extra normal · 28,29 €/hora</option>
+  <option value="Hora extra festiva">Hora extra festiva · 32,30 €/hora</option>
+  <option value="Productividad">Productividad · 279,28 €/servicio</option>
+  <option value="Productividad especial">Productividad especial · 303,28 €/servicio</option>
+  <option value="Productividad agravada">Productividad agravada · 367,28 €/servicio</option>
+  <option value="Festivo">Festivo · 303,48 €/servicio</option>
+  <option value="Festivo especial">Festivo especial · 379,35 €/servicio</option>
+ </select></div>
 </div>
-<div><label for="notes">Observaciones (opcional)</label><input id="notes" maxlength="120" placeholder="Ej. Servicio extraordinario"></div>
+<div class="grid">
+ <div><label id="quantityLabel" for="quantity">Número de horas</label><input id="quantity" type="number" min="0.25" step="0.25" value="1" inputmode="decimal"></div>
+ <div><label for="notes">Observaciones (opcional)</label><input id="notes" maxlength="120" placeholder="Ej. Servicio extraordinario"></div>
+</div>
+<div class="rate-chip"><span id="rateDescription">Tarifa por hora</span><strong id="unitRate">28,29 € / hora</strong></div>
 <div class="amount"><span>Importe calculado</span><strong id="amount">28,29 €</strong></div>
-<p class="muted" id="rateNote">Tarifa: 28,29 €/hora.</p>
+<p class="muted" id="calculationNote">1 hora × 28,29 €.</p>
 <button class="primary" id="add">Añadir al registro</button>
 </section>
-
 <section class="card">
 <h2>Resumen</h2>
-<div class="grid" style="grid-template-columns:1fr 1fr">
-<div><label for="month">Mes</label><select id="month"></select></div>
-<div><label for="year">Año</label><select id="year"></select></div>
+<div class="grid">
+ <div><label for="month">Mes</label><select id="month"></select></div>
+ <div><label for="year">Año</label><select id="year"></select></div>
 </div>
 <div class="stats" style="margin-top:10px">
-<div class="stat"><small>Total generado</small><b id="total">0,00 €</b></div>
-<div class="stat"><small>Pendiente de cobro</small><b id="pending">0,00 €</b></div>
-<div class="stat"><small>Ya cobrado</small><b id="paid">0,00 €</b></div>
-<div class="stat"><small>Horas registradas</small><b id="hoursTotal">0</b></div>
+ <div class="stat"><small>Total generado</small><b id="total">0,00 €</b></div>
+ <div class="stat"><small>Pendiente de cobro</small><b id="pending">0,00 €</b></div>
+ <div class="stat"><small>Ya cobrado</small><b id="paid">0,00 €</b></div>
+ <div class="stat"><small>Horas registradas</small><b id="hoursTotal">0</b></div>
 </div>
-<div class="tabs">
-<button id="monthly" class="active">Vista mensual</button><button id="yearly" class="secondary">Vista anual</button><button id="all" class="secondary">Todo el historial</button>
-</div>
+<div class="tabs"><button id="monthly" class="active">Vista mensual</button><button id="yearly" class="secondary">Vista anual</button><button id="all" class="secondary">Todo el historial</button></div>
 <div id="breakdown" class="rate-list"></div>
 </section>
-
-<section class="card">
-<h2>Historial de servicios</h2>
-<div id="entries"><p class="muted">Todavía no hay servicios registrados.</p></div>
-</section>
-
+<section class="card"><h2>Historial de servicios</h2><div id="entries"><p class="muted">Todavía no hay servicios registrados.</p></div></section>
 <section class="card">
 <h2>Copias y exportación</h2>
-<div class="actions">
-<button class="secondary" id="csv">Exportar CSV (Excel)</button>
-<button class="secondary" id="backup">Copia de seguridad</button>
-<button class="secondary" id="restoreBtn">Restaurar copia</button>
-<input id="restoreFile" type="file" accept="application/json,.json" class="hidden">
-</div>
-<p class="muted">Los registros se guardan en el almacenamiento de este navegador y dispositivo. Exporta una copia periódicamente y antes de cambiar de móvil o borrar los datos del navegador.</p>
+<div class="actions"><button class="secondary" id="csv">Exportar CSV (Excel)</button><button class="secondary" id="backup">Copia de seguridad</button><button class="secondary" id="restoreBtn">Restaurar copia</button><input id="restoreFile" type="file" accept="application/json,.json" class="hidden"></div>
+<p class="muted">Los registros se guardan en este navegador y dispositivo. Exporta una copia periódicamente y antes de cambiar de móvil o borrar los datos del navegador.</p>
 </section>
-<p class="muted">Tarifas 2026: nivel 19 para horas extraordinarias y productividad; categoría Básica para festivos. En el selector y en el desglose se muestra la tarifa unitaria y el total acumulado del periodo. Los registros antiguos se conservan.</p>
+<p class="muted">Tarifas 2026: nivel 19 para horas extraordinarias y productividad; categoría Básica para festivos. Las horas extraordinarias se calculan por hora. Productividad y festivos se calculan por servicio/evento. Las cantidades históricas se conservan.</p>
 </main>
 <script>
-const RATES={
- "Hora extra normal":28.29,
- "Hora extra festiva":32.30,
- "Productividad":279.28,
- "Productividad especial":303.28,
- "Productividad agravada":367.28,
- "Festivo":303.48,
- "Festivo especial":379.35,
- // Tarifas antiguas conservadas para interpretar registros anteriores
- "Horas":27,
- "Horas extras":32
-};
-const UNITS={
- "Hora extra normal":"€/hora",
- "Hora extra festiva":"€/hora",
- "Productividad":"€/servicio",
- "Productividad especial":"€/servicio",
- "Productividad agravada":"€/servicio",
- "Festivo":"€/servicio",
- "Festivo especial":"€/servicio"
-};
+const $=id=>document.getElementById(id);
+const RATES={"Hora extra normal":28.29,"Hora extra festiva":32.30,"Productividad":279.28,"Productividad especial":303.28,"Productividad agravada":367.28,"Festivo":303.48,"Festivo especial":379.35,"Horas":27,"Horas extras":32};
 const HOURLY=new Set(["Hora extra normal","Hora extra festiva","Horas","Horas extras"]);
 const CONCEPTS=["Hora extra normal","Hora extra festiva","Productividad","Productividad especial","Productividad agravada","Festivo","Festivo especial"];
-const LEGACY_CONCEPTS=["Horas","Horas extras"];
-
-let data=JSON.parse(localStorage.getItem("horas_productividad_v1")||"[]");
+const LEGACY=["Horas","Horas extras"];
+let data=[];try{const raw=JSON.parse(localStorage.getItem("horas_productividad_v1")||"[]");if(Array.isArray(raw))data=raw;}catch(e){console.warn("No se pudieron leer los registros locales",e)}
 let mode="monthly";
-const today=new Date(), iso=today.toISOString().slice(0,10);
-$("date").value=iso;
+const today=new Date();const localDate=new Date(today.getTime()-today.getTimezoneOffset()*60000).toISOString().slice(0,10);
+$("date").value=localDate;
 const months=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 months.forEach((m,i)=>$("month").add(new Option(m,String(i+1).padStart(2,"0"))));
 $("month").value=String(today.getMonth()+1).padStart(2,"0");
-for(let y=today.getFullYear()-2;y<=today.getFullYear()+2;y++)$("year").add(new Option(y,y));
-$("year").value=String(today.getFullYear());
+for(let y=today.getFullYear()-2;y<=today.getFullYear()+2;y++)$("year").add(new Option(y,y));$("year").value=String(today.getFullYear());
 function euro(n){return Number(n||0).toLocaleString("es-ES",{style:"currency",currency:"EUR"});}
+function qty(){return Math.max(0,Number(String($("quantity").value).replace(",","."))||0)}
 function calc(){
- let c=$("concept").value, h=Number(String($("hours").value).replace(",","."))||0, amount;
- if(c==="Productividad especial"){h=8;$("hours").value="8";$("hours").disabled=true;amount=RATES[c];$("rateNote").textContent="Tarifa: "+euro(RATES[c])+" por servicio · jornada fija de 8 horas."}
- else if(HOURLY.has(c)){$("hours").disabled=false;amount=h*RATES[c];$("rateNote").textContent="Tarifa: "+euro(RATES[c])+" por hora."}
- else{$("hours").disabled=false;amount=RATES[c];$("rateNote").textContent="Tarifa: "+euro(RATES[c])+" por servicio/evento. Las horas son informativas."}
- $("amount").textContent=euro(amount);return {h,amount};
+ const c=$("concept").value, q=qty(), hourly=HOURLY.has(c), rate=RATES[c]||0;
+ $("quantityLabel").textContent=hourly?"Número de horas":"Número de servicios/eventos";
+ $("quantity").min=hourly?"0.25":"1";$("quantity").step=hourly?"0.25":"1";
+ $("rateDescription").textContent=hourly?"Tarifa por hora":"Tarifa por servicio/evento";
+ $("unitRate").textContent=euro(rate)+(hourly?" / hora":" / servicio");
+ const amount=q*rate;
+ $("amount").textContent=euro(amount);
+ $("calculationNote").textContent=(q.toLocaleString("es-ES")+(hourly?" horas":" servicios/eventos"))+" × "+euro(rate)+" = "+euro(amount)+".";
+ return {q,amount,hourly,rate};
 }
-$("concept").addEventListener("change",calc);$("hours").addEventListener("input",calc);calc();
-function save(){localStorage.setItem("horas_productividad_v1",JSON.stringify(data));render();}
+$("concept").addEventListener("change",()=>{$("quantity").value="1";calc()});$("quantity").addEventListener("input",calc);calc();
+function save(){localStorage.setItem("horas_productividad_v1",JSON.stringify(data));render()}
 $("add").onclick=()=>{
- let d=$("date").value,c=$("concept").value,{h,amount}=calc();
- if(!d){alert("Selecciona una fecha.");return}
- if(HOURLY.has(c)&&h<=0){alert("Introduce un número de horas mayor que cero.");return}
- data.push({id:Date.now()+Math.random(),date:d,concept:c,hours:h,amount,paid:false,notes:$("notes").value.trim()});
- $("notes").value="";save();
+ const d=$("date").value,c=$("concept").value,{q,amount,hourly}=calc();
+ if(!d){alert("Selecciona una fecha.");return}if(q<=0){alert("Introduce una cantidad mayor que cero.");return}
+ data.push({id:Date.now()+Math.random(),date:d,concept:c,hours:hourly?q:0,quantity:q,amount,paid:false,notes:$("notes").value.trim()});
+ $("notes").value="";$("quantity").value="1";calc();save();
 };
-function filtered(){
- let m=$("month").value,y=$("year").value;
- return data.filter(x=>mode==="all"|| (mode==="yearly"?x.date.startsWith(y+"-"):x.date.startsWith(y+"-"+m)));
-}
+function filtered(){const m=$("month").value,y=$("year").value;return data.filter(x=>mode==="all"||(mode==="yearly"?String(x.date||"").startsWith(y+"-"):String(x.date||"").startsWith(y+"-"+m)));}
 function render(){
- let rows=filtered().sort((a,b)=>b.date.localeCompare(a.date));
- let total=rows.reduce((s,x)=>s+x.amount,0),paid=rows.filter(x=>x.paid).reduce((s,x)=>s+x.amount,0),hrs=rows.reduce((s,x)=>s+x.hours,0);
+ const rows=filtered().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+ const total=rows.reduce((s,x)=>s+(Number(x.amount)||0),0),paid=rows.filter(x=>x.paid).reduce((s,x)=>s+(Number(x.amount)||0),0),hrs=rows.reduce((s,x)=>s+(Number(x.hours)||0),0);
  $("total").textContent=euro(total);$("paid").textContent=euro(paid);$("pending").textContent=euro(total-paid);$("hoursTotal").textContent=hrs.toLocaleString("es-ES");
- let by={};CONCEPTS.forEach(k=>by[k]=rows.filter(x=>x.concept===k).reduce((s,x)=>s+x.amount,0));
- let legacy=LEGACY_CONCEPTS.map(k=>({name:k,total:rows.filter(x=>x.concept===k).reduce((s,x)=>s+x.amount,0)})).filter(x=>x.total!==0);
- $("breakdown").innerHTML=CONCEPTS.map(k=>`<div class="rate-row"><div><b>${k}</b><em>${euro(RATES[k])} ${UNITS[k]}</em></div><strong>${euro(by[k])}</strong></div>`).join("") + legacy.map(x=>`<div class="rate-row"><div><b>${x.name} (registro anterior)</b><em>Tarifa histórica</em></div><strong>${euro(x.total)}</strong></div>`).join("");
- $("entries").innerHTML="";
- if(!rows.length){$("entries").innerHTML='<p class="muted">No hay servicios en este periodo.</p>';return}
- rows.forEach(x=>{
-  let el=document.createElement("div");el.className="entry";
-  let left=document.createElement("div"),right=document.createElement("div");right.className="right";
-  let b=document.createElement("b");b.textContent=x.concept;
-  let sm=document.createElement("small");sm.textContent=x.date+" · "+(x.hours?x.hours+" horas":"Servicio")+(x.notes?" · "+x.notes:"");
-  left.append(b,sm);
-  let strong=document.createElement("strong");strong.textContent=euro(x.amount);
-  let pill=document.createElement("span");pill.className="pill"+(x.paid?"":" pending");pill.textContent=x.paid?"Cobrado":"Pendiente";
-  let toggle=document.createElement("button");toggle.className="secondary";toggle.textContent=x.paid?"Marcar pendiente":"Marcar cobrado";toggle.style.marginTop="5px";toggle.style.padding="6px 8px";toggle.onclick=()=>{x.paid=!x.paid;save()};
-  let del=document.createElement("button");del.className="danger";del.textContent="Borrar";del.style.marginTop="5px";del.style.marginLeft="4px";del.style.padding="6px 8px";del.onclick=()=>{if(confirm("¿Eliminar este servicio?")){data=data.filter(z=>z.id!==x.id);save()}};
-  right.append(strong,pill,toggle,del);el.append(left,right);$("entries").append(el);
- });
+ const by={};CONCEPTS.forEach(k=>by[k]=rows.filter(x=>x.concept===k).reduce((s,x)=>s+(Number(x.amount)||0),0));
+ const legacy=LEGACY.map(k=>({name:k,total:rows.filter(x=>x.concept===k).reduce((s,x)=>s+(Number(x.amount)||0),0)})).filter(x=>x.total!==0);
+ $("breakdown").innerHTML=CONCEPTS.map(k=>`<div class="rate-row"><div><b>${k}</b><em>${euro(RATES[k])} ${HOURLY.has(k)?"€/hora":"€/servicio"} · acumulado</em></div><strong>${euro(by[k])}</strong></div>`).join("")+legacy.map(x=>`<div class="rate-row"><div><b>${x.name} (registro anterior)</b><em>Tarifa histórica</em></div><strong>${euro(x.total)}</strong></div>`).join("");
+ $("entries").innerHTML="";if(!rows.length){$("entries").innerHTML='<p class="muted">No hay servicios en este periodo.</p>';return}
+ rows.forEach(x=>{const el=document.createElement("div");el.className="entry";const left=document.createElement("div"),right=document.createElement("div");right.className="right";const b=document.createElement("b");b.textContent=x.concept;const sm=document.createElement("small");const isHour=HOURLY.has(x.concept);const q=Number(x.quantity??x.hours)||0;sm.textContent=x.date+" · "+(isHour?(q+" horas"):(q?(q+" servicio(s)"):"Servicio"))+(x.notes?" · "+x.notes:"");left.append(b,sm);const strong=document.createElement("strong");strong.textContent=euro(x.amount);const pill=document.createElement("span");pill.className="pill"+(x.paid?"":" pending");pill.textContent=x.paid?"Cobrado":"Pendiente";const toggle=document.createElement("button");toggle.className="secondary";toggle.textContent=x.paid?"Marcar pendiente":"Marcar cobrado";toggle.style.cssText="margin-top:5px;padding:6px 8px";toggle.onclick=()=>{x.paid=!x.paid;save()};const del=document.createElement("button");del.className="danger";del.textContent="Borrar";del.style.cssText="margin-top:5px;margin-left:4px;padding:6px 8px";del.onclick=()=>{if(confirm("¿Eliminar este servicio?")){data=data.filter(z=>z.id!==x.id);save()}};right.append(strong,pill,toggle,del);el.append(left,right);$("entries").append(el)});
 }
-function setMode(m){mode=m;["monthly","yearly","all"].forEach(id=>$(id).className=id===m?"active":"secondary");render();}
-$("monthly").onclick=()=>setMode("monthly");$("yearly").onclick=()=>setMode("yearly");$("all").onclick=()=>setMode("all");
-$("month").onchange=render;$("year").onchange=render;
-$("csv").onclick=()=>{
- let rows=filtered();if(!rows.length){alert("No hay registros para exportar.");return}
- let csv=[["Fecha","Concepto","Horas","Importe","Estado","Observaciones"],...rows.map(x=>[x.date,x.concept,x.hours,x.amount,x.paid?"Cobrado":"Pendiente",x.notes])].map(r=>r.map(v=>'"'+String(v??"").replaceAll('"','""')+'"').join(";")).join("\r\n");
- download("\uFEFF"+csv,"control_horas.csv","text/csv;charset=utf-8");
-};
-$("backup").onclick=()=>download(JSON.stringify({version:1,exportedAt:new Date().toISOString(),entries:data},null,2),"copia_control_horas.json","application/json");
-$("restoreBtn").onclick=()=>$("restoreFile").click();
-$("restoreFile").onchange=async e=>{
- let f=e.target.files[0];if(!f)return;
- try{let obj=JSON.parse(await f.text());if(!Array.isArray(obj.entries))throw Error();if(confirm("La restauración sustituirá los registros actuales. ¿Continuar?")){data=obj.entries;save();alert("Copia restaurada.")}}
- catch{alert("El archivo no parece una copia válida.")}
- e.target.value="";
-};
-function download(content,name,type){let blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;a.click();URL.revokeObjectURL(url)}
+function setMode(m){mode=m;["monthly","yearly","all"].forEach(id=>$(id).className=id===m?"active":"secondary");render()}
+$("monthly").onclick=()=>setMode("monthly");$("yearly").onclick=()=>setMode("yearly");$("all").onclick=()=>setMode("all");$("month").onchange=render;$("year").onchange=render;
+$("csv").onclick=()=>{const rows=filtered();if(!rows.length){alert("No hay registros para exportar.");return}const csv=[["Fecha","Concepto","Cantidad","Unidad","Horas","Importe","Estado","Observaciones"],...rows.map(x=>[x.date,x.concept,x.quantity??x.hours,HOURLY.has(x.concept)?"horas":"servicios",x.hours,x.amount,x.paid?"Cobrado":"Pendiente",x.notes])].map(r=>r.map(v=>'"'+String(v??"").replaceAll('"','""')+'"').join(";")).join("\r\n");download("\uFEFF"+csv,"control_horas.csv","text/csv;charset=utf-8")};
+$("backup").onclick=()=>download(JSON.stringify({version:2,exportedAt:new Date().toISOString(),entries:data},null,2),"copia_control_horas.json","application/json");
+$("restoreBtn").onclick=()=>$("restoreFile").click();$("restoreFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const obj=JSON.parse(await f.text());if(!Array.isArray(obj.entries))throw Error();if(confirm("La restauración sustituirá los registros actuales. ¿Continuar?")){data=obj.entries;save();alert("Copia restaurada.")}}catch{alert("El archivo no parece una copia válida.")}e.target.value=""};
+function download(content,name,type){const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 render();
-if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+if("serviceWorker" in navigator){window.addEventListener("load",async()=>{try{const reg=await navigator.serviceWorker.register("./sw.js",{updateViaCache:"none"});reg.update()}catch(e){console.warn("Service worker",e)}})}
 </script>
 </body></html>
