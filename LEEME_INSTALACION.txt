@@ -1,4 +1,4 @@
-CONTROL DE HORAS Y PRODUCTIVIDAD – VERSIÓN 5.2.0
+CONTROL DE HORAS Y PRODUCTIVIDAD – VERSIÓN 5.3.0
 
 CAMBIOS DE ESTA VERSIÓN
 - Se incorpora el emblema de la Policía Local de Las Palmas de Gran Canaria en la cabecera.
@@ -21,10 +21,13 @@ ANTES DE ACTUALIZAR
 3. En GitHub abre el repositorio y selecciona Add file > Upload files.
 4. Sube los seis archivos y pulsa Commit changes.
 5. Espera a que GitHub Pages publique los cambios.
-6. Abre la aplicación en Chrome y recarga la página. La versión nueva se identifica como 5.2.0.
+6. Abre la aplicación en Chrome y recarga la página. La versión nueva se identifica como 5.3.0.
 
 IMPORTANTE
 No borres los datos del navegador ni desinstales la aplicación durante la actualización. La versión conserva las claves locales horas_productividad_v1 y horas_productividad_rates_v1.
 
 NOTA SOBRE EL EMBLEMA
 El emblema se carga desde Wikimedia Commons. La ficha del archivo lo atribuye a la Policía Local de Las Palmas de Gran Canaria y lo identifica bajo CC0. Si el dispositivo está sin conexión, puede que el emblema no se muestre hasta recuperar internet.
+
+CAMBIO ADICIONAL 5.3.0
+- Debajo de la tabla de cantidades se añade una segunda tabla económica por meses (enero a diciembre y TOTAL), agrupada en Horas extra, Productividad y Festivo. Los importes se calculan sumando los importes reales de los registros de cada grupo.
