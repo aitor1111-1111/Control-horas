@@ -1,21 +1,15 @@
 {
   "name": "Control de Horas y Productividad",
   "short_name": "Control Horas",
+  "description": "Gestión personal de servicios, horas extraordinarias y productividad",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#edf3fa",
-  "theme_color": "#102b4c",
-  "description": "Registro de horas extraordinarias, productividad e importes.",
+  "orientation": "portrait",
+  "background_color": "#eaf2fb",
+  "theme_color": "#062747",
   "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    {"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
   ]
 }

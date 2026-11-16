@@ -1,26 +1,23 @@
-CONTROL DE HORAS Y PRODUCTIVIDAD - ACTUALIZACIÓN 2026.11.16.4
+CONTROL DE HORAS Y PRODUCTIVIDAD — DISEÑO POLICIAL 4.1.0
 
 CONTENIDO
-- index.html: aplicación web.
-- sw.js: actualización de caché y service worker.
-- manifest.webmanifest: configuración instalable.
-- icon-192.png e icon-512.png: iconos.
+- index.html: aplicación completa.
+- manifest.webmanifest: configuración de instalación como aplicación.
+- sw.js: caché y actualización automática (caché v4.1).
+- icon-192.png e icon-512.png: iconos de la aplicación.
 
-TARIFAS CONFIGURADAS
-- Hora extra normal: 28,29 €/hora.
-- Hora extra festiva: 32,30 €/hora.
-- Productividad: 279,28 €/servicio.
-- Productividad especial: 303,28 €/servicio.
-- Productividad agravada: 367,28 €/servicio.
-- Festivo (Básica): 303,48 €/servicio.
-- Festivo especial (Básica): 379,35 €/servicio.
+PUBLICAR LA ACTUALIZACIÓN EN GITHUB PAGES
+1. Descomprime este ZIP en el ordenador.
+2. Abre tu repositorio de GitHub (Control-horas).
+3. Entra en la carpeta donde están actualmente index.html, manifest.webmanifest y sw.js.
+4. Sube y reemplaza esos tres archivos por los de esta versión. Sube también los dos iconos si deseas mantenerlos sincronizados.
+5. Confirma los cambios (Commit changes).
+6. Espera a que GitHub Pages termine de publicar.
+7. En el móvil, abre la dirección de tu aplicación con Chrome. Recarga la página. Si no aparece el diseño nuevo, cierra la PWA y vuelve a abrirla; después espera unos segundos para que el service worker actualice la caché.
+8. Si sigue apareciendo la versión anterior, abre la web en Chrome > información del sitio > almacenamiento y borra SOLO los datos de ese sitio; luego vuelve a abrir la dirección e instala/añade a pantalla de inicio otra vez. Antes de borrar datos del sitio, descarga una copia JSON desde Copias de seguridad.
 
-CÁLCULO
-Las dos horas extraordinarias se calculan multiplicando el número de horas por su tarifa horaria.
-Productividad y festivos se calculan multiplicando el número de servicios/eventos por la tarifa por servicio.
-
-ACTUALIZACIÓN
-Subir los seis archivos a la raíz del repositorio GitHub Pages y confirmar el commit. Mantener el mismo repositorio y URL. Tras publicar, cerrar por completo la PWA y las pestañas del sitio, volver a abrir la URL y esperar a que se active el nuevo service worker.
-
-DATOS
-Los registros siguen guardándose localmente con la clave horas_productividad_v1 para conservar los registros previos del navegador. Antes de actualizar, exportar una copia desde «Copia de seguridad». No borrar datos del sitio ni desinstalar la aplicación.
+DATOS Y COPIAS
+- Los registros existentes usan la misma clave localStorage "horas_productividad_v1" para facilitar que se mantengan en el mismo navegador/dispositivo.
+- Las tarifas personalizadas se guardan aparte.
+- La publicación de una nueva versión NO realiza una copia de seguridad de los registros. Descarga la copia JSON desde la aplicación antes de borrar datos del navegador o cambiar de dispositivo.
+- La aplicación no envía los datos a GitHub: los guarda localmente en el dispositivo/navegador.
