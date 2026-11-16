@@ -34,6 +34,7 @@ button{border:0;border-radius:11px;padding:12px 14px;font:600 14px system-ui;cur
 .actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1}
 .muted{color:var(--muted);font-size:12px;line-height:1.45}
 .hidden{display:none!important}
+.rate-list{display:grid;gap:8px;margin-top:12px}.rate-row{display:flex;justify-content:space-between;gap:12px;padding:9px 10px;background:#f7f9fc;border-radius:10px;font-size:13px}.rate-row span{color:var(--muted)}.rate-row strong{white-space:nowrap;color:var(--green)}.rate-row em{font-style:normal;color:var(--muted);font-size:11px;display:block;margin-top:2px}
 @media(min-width:600px){.grid{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
@@ -45,13 +46,19 @@ button{border:0;border-radius:11px;padding:12px 14px;font:600 14px system-ui;cur
 <div class="grid">
 <div><label for="date">Fecha</label><input id="date" type="date"></div>
 <div><label for="concept">Tipo de servicio</label><select id="concept">
-<option>Horas</option><option>Horas extras</option><option>Productividad</option><option>Productividad especial</option>
+<option value="Hora extra normal">Hora extra normal · 28,29 €/hora</option>
+<option value="Hora extra festiva">Hora extra festiva · 32,30 €/hora</option>
+<option value="Productividad">Productividad · 279,28 €/servicio</option>
+<option value="Productividad especial">Productividad especial · 303,28 €/servicio</option>
+<option value="Productividad agravada">Productividad agravada · 367,28 €/servicio</option>
+<option value="Festivo">Festivo · 303,48 €/servicio</option>
+<option value="Festivo especial">Festivo especial · 379,35 €/servicio</option>
 </select></div>
 <div><label for="hours">Número de horas</label><input id="hours" type="number" min="0.25" step="0.25" value="1" inputmode="decimal"></div>
 </div>
 <div><label for="notes">Observaciones (opcional)</label><input id="notes" maxlength="120" placeholder="Ej. Servicio extraordinario"></div>
-<div class="amount"><span>Importe calculado</span><strong id="amount">27,00 €</strong></div>
-<p class="muted" id="rateNote">Tarifa: 27 €/hora.</p>
+<div class="amount"><span>Importe calculado</span><strong id="amount">28,29 €</strong></div>
+<p class="muted" id="rateNote">Tarifa: 28,29 €/hora.</p>
 <button class="primary" id="add">Añadir al registro</button>
 </section>
 
@@ -70,7 +77,7 @@ button{border:0;border-radius:11px;padding:12px 14px;font:600 14px system-ui;cur
 <div class="tabs">
 <button id="monthly" class="active">Vista mensual</button><button id="yearly" class="secondary">Vista anual</button><button id="all" class="secondary">Todo el historial</button>
 </div>
-<div id="breakdown" class="muted"></div>
+<div id="breakdown" class="rate-list"></div>
 </section>
 
 <section class="card">
@@ -88,11 +95,34 @@ button{border:0;border-radius:11px;padding:12px 14px;font:600 14px system-ui;cur
 </div>
 <p class="muted">Los registros se guardan en el almacenamiento de este navegador y dispositivo. Exporta una copia periódicamente y antes de cambiar de móvil o borrar los datos del navegador.</p>
 </section>
-<p class="muted">Tarifas iniciales: Horas 27 €/hora · Horas extras 32 €/hora · Productividad 273 € por servicio · Productividad especial 303 € por jornada fija de 8 horas. Puedes cambiar estos importes desde la configuración de tarifas en futuras versiones.</p>
+<p class="muted">Tarifas 2026: nivel 19 para horas extraordinarias y productividad; categoría Básica para festivos. En el selector y en el desglose se muestra la tarifa unitaria y el total acumulado del periodo. Los registros antiguos se conservan.</p>
 </main>
 <script>
-const RATES={"Horas":27,"Horas extras":32,"Productividad":273,"Productividad especial":303};
-const $=id=>document.getElementById(id);
+const RATES={
+ "Hora extra normal":28.29,
+ "Hora extra festiva":32.30,
+ "Productividad":279.28,
+ "Productividad especial":303.28,
+ "Productividad agravada":367.28,
+ "Festivo":303.48,
+ "Festivo especial":379.35,
+ // Tarifas antiguas conservadas para interpretar registros anteriores
+ "Horas":27,
+ "Horas extras":32
+};
+const UNITS={
+ "Hora extra normal":"€/hora",
+ "Hora extra festiva":"€/hora",
+ "Productividad":"€/servicio",
+ "Productividad especial":"€/servicio",
+ "Productividad agravada":"€/servicio",
+ "Festivo":"€/servicio",
+ "Festivo especial":"€/servicio"
+};
+const HOURLY=new Set(["Hora extra normal","Hora extra festiva","Horas","Horas extras"]);
+const CONCEPTS=["Hora extra normal","Hora extra festiva","Productividad","Productividad especial","Productividad agravada","Festivo","Festivo especial"];
+const LEGACY_CONCEPTS=["Horas","Horas extras"];
+
 let data=JSON.parse(localStorage.getItem("horas_productividad_v1")||"[]");
 let mode="monthly";
 const today=new Date(), iso=today.toISOString().slice(0,10);
@@ -105,8 +135,9 @@ $("year").value=String(today.getFullYear());
 function euro(n){return Number(n||0).toLocaleString("es-ES",{style:"currency",currency:"EUR"});}
 function calc(){
  let c=$("concept").value, h=Number(String($("hours").value).replace(",","."))||0, amount;
- if(c==="Productividad especial"){h=8;$("hours").value="8";$("hours").disabled=true;amount=303;$("rateNote").textContent="Jornada fija: 8 horas · 303 €."}
- else{$("hours").disabled=false;amount=c==="Productividad"?273:h*RATES[c];$("rateNote").textContent=c==="Productividad"?"Importe fijo por servicio: 273 €.":"Tarifa: "+RATES[c]+" €/hora."}
+ if(c==="Productividad especial"){h=8;$("hours").value="8";$("hours").disabled=true;amount=RATES[c];$("rateNote").textContent="Tarifa: "+euro(RATES[c])+" por servicio · jornada fija de 8 horas."}
+ else if(HOURLY.has(c)){$("hours").disabled=false;amount=h*RATES[c];$("rateNote").textContent="Tarifa: "+euro(RATES[c])+" por hora."}
+ else{$("hours").disabled=false;amount=RATES[c];$("rateNote").textContent="Tarifa: "+euro(RATES[c])+" por servicio/evento. Las horas son informativas."}
  $("amount").textContent=euro(amount);return {h,amount};
 }
 $("concept").addEventListener("change",calc);$("hours").addEventListener("input",calc);calc();
@@ -114,7 +145,7 @@ function save(){localStorage.setItem("horas_productividad_v1",JSON.stringify(dat
 $("add").onclick=()=>{
  let d=$("date").value,c=$("concept").value,{h,amount}=calc();
  if(!d){alert("Selecciona una fecha.");return}
- if(c!=="Productividad especial"&&c!=="Productividad"&&h<=0){alert("Introduce un número de horas mayor que cero.");return}
+ if(HOURLY.has(c)&&h<=0){alert("Introduce un número de horas mayor que cero.");return}
  data.push({id:Date.now()+Math.random(),date:d,concept:c,hours:h,amount,paid:false,notes:$("notes").value.trim()});
  $("notes").value="";save();
 };
@@ -126,8 +157,9 @@ function render(){
  let rows=filtered().sort((a,b)=>b.date.localeCompare(a.date));
  let total=rows.reduce((s,x)=>s+x.amount,0),paid=rows.filter(x=>x.paid).reduce((s,x)=>s+x.amount,0),hrs=rows.reduce((s,x)=>s+x.hours,0);
  $("total").textContent=euro(total);$("paid").textContent=euro(paid);$("pending").textContent=euro(total-paid);$("hoursTotal").textContent=hrs.toLocaleString("es-ES");
- let by={};Object.keys(RATES).forEach(k=>by[k]=rows.filter(x=>x.concept===k).reduce((s,x)=>s+x.amount,0));
- $("breakdown").innerHTML=Object.entries(by).map(([k,v])=>`${k}: <b>${euro(v)}</b>`).join(" &nbsp; · &nbsp; ")||"Sin movimientos en este periodo.";
+ let by={};CONCEPTS.forEach(k=>by[k]=rows.filter(x=>x.concept===k).reduce((s,x)=>s+x.amount,0));
+ let legacy=LEGACY_CONCEPTS.map(k=>({name:k,total:rows.filter(x=>x.concept===k).reduce((s,x)=>s+x.amount,0)})).filter(x=>x.total!==0);
+ $("breakdown").innerHTML=CONCEPTS.map(k=>`<div class="rate-row"><div><b>${k}</b><em>${euro(RATES[k])} ${UNITS[k]}</em></div><strong>${euro(by[k])}</strong></div>`).join("") + legacy.map(x=>`<div class="rate-row"><div><b>${x.name} (registro anterior)</b><em>Tarifa histórica</em></div><strong>${euro(x.total)}</strong></div>`).join("");
  $("entries").innerHTML="";
  if(!rows.length){$("entries").innerHTML='<p class="muted">No hay servicios en este periodo.</p>';return}
  rows.forEach(x=>{

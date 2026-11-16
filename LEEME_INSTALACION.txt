@@ -7,10 +7,13 @@ después de abrirla una primera vez.
 
 FUNCIONES
 - Fecha y día asociados al registro.
-- Horas: 27 €/hora.
-- Horas extras: 32 €/hora.
-- Productividad: 273 € por servicio.
-- Productividad especial: 303 € por jornada fija de 8 horas.
+- Hora extra normal (nivel 19): 28,29 €/hora.
+- Hora extra festiva (nivel 19): 32,30 €/hora.
+- Productividad (nivel 19): 279,28 € por servicio.
+- Productividad especial (nivel 19): 303,28 € por servicio.
+- Productividad agravada (nivel 19): 367,28 € por servicio.
+- Festivo, categoría Básica: 303,48 € por servicio.
+- Festivo especial, categoría Básica: 379,35 € por servicio.
 - Resumen mensual, anual y de todo el historial.
 - Separación entre cobrado y pendiente de cobro.
 - Exportación CSV compatible con Excel.
@@ -33,6 +36,19 @@ No se sincronizan automáticamente con el programa de Windows ni con otros móvi
 Usa "Copia de seguridad" con regularidad y guarda el JSON en un lugar seguro.
 
 NOTA DE TARIFAS
-Productividad se contabiliza como 273 € por servicio, independientemente de las
-horas introducidas; las horas se conservan como dato informativo.
-Productividad especial se fija en 8 horas y 303 €.
+Las horas extraordinarias se calculan por hora. Productividad y festivos se
+contabilizan por servicio/evento; las horas introducidas son informativas.
+Productividad especial conserva el registro de jornada fija de 8 horas.
+Las tarifas se han tomado de los documentos retributivos aportados: nivel 19
+para horas y productividad, y categoría Básica para festivos.
+
+
+ACTUALIZACION DE TARIFAS 2026
+- Hora extra normal: 28,29 EUR/h (nivel 19).
+- Hora extra festiva: 32,30 EUR/h (nivel 19).
+- Productividad: 279,28 EUR/servicio (nivel 19).
+- Productividad especial: 303,28 EUR/servicio (nivel 19).
+- Productividad agravada: 367,28 EUR/servicio (nivel 19).
+- Festivo: 303,48 EUR/servicio (categoria Basica).
+- Festivo especial: 379,35 EUR/servicio (categoria Basica).
+El selector muestra la tarifa junto al nombre. El resumen desglosa tarifa y total acumulado por concepto.
