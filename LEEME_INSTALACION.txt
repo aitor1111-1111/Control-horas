@@ -1,23 +1,26 @@
-CONTROL DE HORAS Y PRODUCTIVIDAD — DISEÑO POLICIAL 4.1.0
+CONTROL DE HORAS Y PRODUCTIVIDAD – VERSIÓN 5.1.0
 
-CONTENIDO
-- index.html: aplicación completa.
-- manifest.webmanifest: configuración de instalación como aplicación.
-- sw.js: caché y actualización automática (caché v4.1).
-- icon-192.png e icon-512.png: iconos de la aplicación.
+Actualización:
+- Estadísticas con gráficos circulares tipo anillo (quesitos): distribución económica por tipo de servicio y distribución de horas/servicios.
+- Las horas extra acumuladas suman conjuntamente Hora extra normal y Hora extra festiva.
+- Se mantiene el almacenamiento local horas_productividad_v1 y las tarifas existentes.
 
-PUBLICAR LA ACTUALIZACIÓN EN GITHUB PAGES
-1. Descomprime este ZIP en el ordenador.
-2. Abre tu repositorio de GitHub (Control-horas).
-3. Entra en la carpeta donde están actualmente index.html, manifest.webmanifest y sw.js.
-4. Sube y reemplaza esos tres archivos por los de esta versión. Sube también los dos iconos si deseas mantenerlos sincronizados.
-5. Confirma los cambios (Commit changes).
-6. Espera a que GitHub Pages termine de publicar.
-7. En el móvil, abre la dirección de tu aplicación con Chrome. Recarga la página. Si no aparece el diseño nuevo, cierra la PWA y vuelve a abrirla; después espera unos segundos para que el service worker actualice la caché.
-8. Si sigue apareciendo la versión anterior, abre la web en Chrome > información del sitio > almacenamiento y borra SOLO los datos de ese sitio; luego vuelve a abrir la dirección e instala/añade a pantalla de inicio otra vez. Antes de borrar datos del sitio, descarga una copia JSON desde Copias de seguridad.
+ARCHIVOS
+Sube estos seis archivos a la raíz del repositorio GitHub Pages, sustituyendo los anteriores:
+index.html
+manifest.webmanifest
+sw.js
+icon-192.png
+icon-512.png
+LEEME_INSTALACION.txt
 
-DATOS Y COPIAS
-- Los registros existentes usan la misma clave localStorage "horas_productividad_v1" para facilitar que se mantengan en el mismo navegador/dispositivo.
-- Las tarifas personalizadas se guardan aparte.
-- La publicación de una nueva versión NO realiza una copia de seguridad de los registros. Descarga la copia JSON desde la aplicación antes de borrar datos del navegador o cambiar de dispositivo.
-- La aplicación no envía los datos a GitHub: los guarda localmente en el dispositivo/navegador.
+ANTES DE ACTUALIZAR
+1. Exporta una copia de seguridad desde la aplicación actual y conserva el archivo JSON.
+2. Descomprime este ZIP.
+3. En GitHub abre el repositorio y selecciona Add file > Upload files.
+4. Sube los seis archivos y pulsa Commit changes.
+5. Espera a que GitHub Pages publique los cambios.
+6. Abre la web en Chrome y recarga. Si la app instalada conserva la versión anterior, cierra y vuelve a abrirla tras actualizar la página.
+
+IMPORTANTE
+No borres los datos del navegador ni desinstales la aplicación durante la actualización. La versión conserva la clave local de registros y tarifas.
