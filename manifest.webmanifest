@@ -3,8 +3,8 @@
   "short_name": "Control Horas",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f2f5f9",
-  "theme_color": "#17365d",
+  "background_color": "#edf3fa",
+  "theme_color": "#102b4c",
   "description": "Registro de horas extraordinarias, productividad e importes.",
   "icons": [
     {
