@@ -170,12 +170,13 @@ function renderHome(){
  $('kTotal').textContent=euro(total);$('kHours').textContent=hours.toLocaleString('es-ES',{maximumFractionDigits:1})+' h';$('kProd').textContent=prod+' serv.';$('kCount').textContent=rows.length;$('yearTitle').textContent='(año '+y+')';
  const months=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
  const concepts=Object.keys(DEFAULT_RATES);
- $('monthlyHead').innerHTML='<tr><th>Mes</th>'+concepts.map(c=>`<th>${c}<br><small>${HOURLY.has(c)||EIGHT_HOUR_SERVICES.has(c)?'h':'—'}</small></th>`).join('')+'<th class="total-col">Total horas<br><small>h</small></th></tr>'; 
+ $('monthlyHead').innerHTML='<tr><th>Mes</th>'+concepts.map(c=>`<th>${c}<br><small>${HOURLY.has(c)||EIGHT_HOUR_SERVICES.has(c)?'h':'—'}</small></th>`).join('')+'<th class="total-col">Total horas extra<br><small>h</small></th><th class="total-col">Total horas computables<br><small>h</small></th></tr>'; 
  const qty=(list,c)=>list.filter(x=>x.concept===c).reduce((s,x)=>s+(HOURLY.has(c)?Number(x.quantity??x.hours??0):(EIGHT_HOUR_SERVICES.has(c)?8:0)),0);
+ const overtimeHours=list=>list.filter(x=>HOURLY.has(x.concept)).reduce((s,x)=>s+Number(x.quantity??x.hours??0),0);
  const fmt=n=>Number(n||0).toLocaleString('es-ES',{maximumFractionDigits:2});
- let body=months.map((name,i)=>{let mm=String(i+1).padStart(2,'0'),mr=rows.filter(x=>String(x.date||'').slice(5,7)===mm),vals=concepts.map(c=>qty(mr,c));return `<tr><td class="service-name">${name}</td>${vals.map(v=>`<td>${fmt(v)}</td>`).join('')}<td class="total-col">${fmt(vals.reduce((a,b)=>a+b,0))}</td></tr>`}).join('');
- const annual=concepts.map(c=>qty(rows,c));
- $('totalsBody').innerHTML=body+`<tr class="annual-total"><td class="service-name">TOTAL</td>${annual.map(v=>`<td><b>${fmt(v)}</b></td>`).join('')}<td class="total-col"><b>${fmt(annual.reduce((a,b)=>a+b,0))}</b></td></tr>`;
+ let body=months.map((name,i)=>{let mm=String(i+1).padStart(2,'0'),mr=rows.filter(x=>String(x.date||'').slice(5,7)===mm),vals=concepts.map(c=>qty(mr,c)),ot=overtimeHours(mr),all=vals.reduce((a,b)=>a+b,0);return `<tr><td class="service-name">${name}</td>${vals.map(v=>`<td>${fmt(v)}</td>`).join('')}<td class="total-col">${fmt(ot)}</td><td class="total-col">${fmt(all)}</td></tr>`}).join('');
+ const annual=concepts.map(c=>qty(rows,c)),annualOvertime=overtimeHours(rows),annualAll=annual.reduce((a,b)=>a+b,0);
+ $('totalsBody').innerHTML=body+`<tr class="annual-total"><td class="service-name">TOTAL</td>${annual.map(v=>`<td><b>${fmt(v)}</b></td>`).join('')}<td class="total-col"><b>${fmt(annualOvertime)}</b></td><td class="total-col"><b>${fmt(annualAll)}</b></td></tr>`;
  const groups=[{name:'Horas extra',concepts:['Hora extra normal']},{name:'Horas extra festivas',concepts:['Hora extra festiva']},{name:'Productividad',concepts:['Productividad','Productividad especial','Productividad agravada']},{name:'Festivo',concepts:['Festivo','Festivo especial']}];
  const moneyFmt=n=>Number(n||0).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2});
  $('moneyYearTitle').textContent='(año '+y+')';
