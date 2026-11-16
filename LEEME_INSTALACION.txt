@@ -1,9 +1,10 @@
-CONTROL DE HORAS Y PRODUCTIVIDAD – VERSIÓN 5.1.0
+CONTROL DE HORAS Y PRODUCTIVIDAD – VERSIÓN 5.2.0
 
-Actualización:
-- Estadísticas con gráficos circulares tipo anillo (quesitos): distribución económica por tipo de servicio y distribución de horas/servicios.
-- Las horas extra acumuladas suman conjuntamente Hora extra normal y Hora extra festiva.
-- Se mantiene el almacenamiento local horas_productividad_v1 y las tarifas existentes.
+CAMBIOS DE ESTA VERSIÓN
+- Se incorpora el emblema de la Policía Local de Las Palmas de Gran Canaria en la cabecera.
+- Se sustituye el resumen anterior por una tabla mensual completa: enero a diciembre y una última fila TOTAL.
+- Cada categoría muestra su cantidad mensual y su acumulado anual. Las horas extra se expresan en horas (h); productividad y festivos, en servicios (serv.).
+- Se conserva el almacenamiento local de registros y tarifas de las versiones anteriores.
 
 ARCHIVOS
 Sube estos seis archivos a la raíz del repositorio GitHub Pages, sustituyendo los anteriores:
@@ -20,7 +21,10 @@ ANTES DE ACTUALIZAR
 3. En GitHub abre el repositorio y selecciona Add file > Upload files.
 4. Sube los seis archivos y pulsa Commit changes.
 5. Espera a que GitHub Pages publique los cambios.
-6. Abre la web en Chrome y recarga. Si la app instalada conserva la versión anterior, cierra y vuelve a abrirla tras actualizar la página.
+6. Abre la aplicación en Chrome y recarga la página. La versión nueva se identifica como 5.2.0.
 
 IMPORTANTE
-No borres los datos del navegador ni desinstales la aplicación durante la actualización. La versión conserva la clave local de registros y tarifas.
+No borres los datos del navegador ni desinstales la aplicación durante la actualización. La versión conserva las claves locales horas_productividad_v1 y horas_productividad_rates_v1.
+
+NOTA SOBRE EL EMBLEMA
+El emblema se carga desde Wikimedia Commons. La ficha del archivo lo atribuye a la Policía Local de Las Palmas de Gran Canaria y lo identifica bajo CC0. Si el dispositivo está sin conexión, puede que el emblema no se muestre hasta recuperar internet.
