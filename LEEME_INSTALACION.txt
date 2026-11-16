@@ -1,9 +1,10 @@
-CONTROL DE HORAS Y PRODUCTIVIDAD – VERSIÓN 5.3.0
+CONTROL DE HORAS Y PRODUCTIVIDAD – VERSIÓN 5.6.0
 
 CAMBIOS DE ESTA VERSIÓN
-- Se incorpora el emblema de la Policía Local de Las Palmas de Gran Canaria en la cabecera.
-- Se sustituye el resumen anterior por una tabla mensual completa: enero a diciembre y una última fila TOTAL.
-- Cada categoría muestra su cantidad mensual y su acumulado anual. Las horas extra se expresan en horas (h); productividad y festivos, en servicios (serv.).
+- Se sustituyen los gráficos circulares por histogramas de barras horizontales, tanto para importes como para cantidades.
+- Se añaden iconos más coloridos y diferenciados para cada tipo de servicio en el selector y en el historial.
+- Se conserva el diseño compacto y adaptable a móviles.
+- Se mantienen las tablas mensuales de cantidades y de importes de la versión 5.6.0.
 - Se conserva el almacenamiento local de registros y tarifas de las versiones anteriores.
 
 ARCHIVOS
@@ -21,13 +22,10 @@ ANTES DE ACTUALIZAR
 3. En GitHub abre el repositorio y selecciona Add file > Upload files.
 4. Sube los seis archivos y pulsa Commit changes.
 5. Espera a que GitHub Pages publique los cambios.
-6. Abre la aplicación en Chrome y recarga la página. La versión nueva se identifica como 5.3.0.
+6. Abre la aplicación en Chrome y recarga la página. La versión nueva se identifica como 5.6.0.
 
 IMPORTANTE
 No borres los datos del navegador ni desinstales la aplicación durante la actualización. La versión conserva las claves locales horas_productividad_v1 y horas_productividad_rates_v1.
 
-NOTA SOBRE EL EMBLEMA
-El emblema se carga desde Wikimedia Commons. La ficha del archivo lo atribuye a la Policía Local de Las Palmas de Gran Canaria y lo identifica bajo CC0. Si el dispositivo está sin conexión, puede que el emblema no se muestre hasta recuperar internet.
-
-CAMBIO ADICIONAL 5.3.0
-- Debajo de la tabla de cantidades se añade una segunda tabla económica por meses (enero a diciembre y TOTAL), agrupada en Horas extra, Productividad y Festivo. Los importes se calculan sumando los importes reales de los registros de cada grupo.
+- Iconos profesionales vectoriales diferenciados para los siete conceptos.
+- Columna Total al extremo derecho de ambas tablas mensuales y total anual. En la tabla de cantidades, el total general suma cantidades de horas y servicios y debe interpretarse como suma de unidades registradas, no como una magnitud homogénea.
