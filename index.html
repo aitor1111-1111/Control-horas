@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#082747"><meta name="description" content="Control personal de horas extraordinarias y productividad">
-<meta name="application-version" content="2026.11.17.professional-5.10.0">
+<meta name="application-version" content="2026.11.17.professional-5.10.1">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><title>Control de Horas y Productividad</title>
 <style>
 :root{--navy:#062747;--navy2:#0b3e70;--blue:#1263a7;--blue2:#2586ce;--bg:#eaf2fb;--ink:#14243a;--muted:#61738c;--line:#d9e4f0;--green:#078447;--shadow:0 5px 15px #123b641b}
@@ -144,7 +144,7 @@ main{max-width:1000px;padding:14px 12px 28px}.kpis{gap:9px;margin:0 0 13px}.kpi{
 <section class="view" id="view-estadisticas"><section class="card"><h2>▥ Estadísticas</h2><div class="toolbar"><select id="statsYear"></select><select id="statsMonth"><option value="all">Todo el año</option><option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option><option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option><option value="07">Julio</option><option value="08">Agosto</option><option value="09">Septiembre</option><option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option></select></div><div class="stats-summary" id="statsSummary"></div><div class="donut-section"><h3>Distribución del importe por servicio</h3><div id="amountDonut"></div></div><div class="donut-section"><h3>Distribución de registros por categoría</h3><div id="countDonut"></div></div></section></section>
 <section class="view" id="view-tarifas"><section class="card"><h2>⚙ Tarifas de referencia</h2><p class="hint">Puedes modificar las tarifas. Los nuevos registros utilizarán el importe actualizado; los anteriores conservan el importe con el que se guardaron.</p><div id="rateEditor"></div><button class="primary" id="saveRates">Guardar tarifas</button></section></section>
 <section class="view" id="view-copias"><section class="card"><h2>☁ Copias de seguridad</h2><p class="hint">Exporta una copia JSON para conservar todos tus registros y tarifas. Puedes importarla en otro móvil o después de reinstalar la aplicación.</p><div class="backup-actions"><button class="secondary" id="backup">☁ Descargar copia</button><button class="secondary" id="restoreBtn">↥ Restaurar copia</button><button class="secondary" id="csv">⇩ Exportar Excel (CSV)</button></div><input id="restoreFile" type="file" accept="application/json,.json" class="hidden"><p class="hint">Los datos se guardan en el almacenamiento local de este navegador. La copia de seguridad es independiente de GitHub y de las actualizaciones de la aplicación.</p></section></section>
-<section class="view" id="view-mas"><section class="card"><h2>••• Más opciones</h2><button class="quick" style="width:100%;margin:5px 0" onclick="showView('tarifas')"><span class="qico">⚙</span><span><b>Tarifas</b><small>Configurar importes</small></span><span class="arrow">›</span></button><button class="quick" style="width:100%;margin:5px 0" onclick="showView('copias')"><span class="qico">☁</span><span><b>Copias y exportación</b><small>Guardar o recuperar datos</small></span><span class="arrow">›</span></button><p class="hint">Control de Horas y Productividad · Versión 5.10.0</p></section></section>
+<section class="view" id="view-mas"><section class="card"><h2>••• Más opciones</h2><button class="quick" style="width:100%;margin:5px 0" onclick="showView('tarifas')"><span class="qico">⚙</span><span><b>Tarifas</b><small>Configurar importes</small></span><span class="arrow">›</span></button><button class="quick" style="width:100%;margin:5px 0" onclick="showView('copias')"><span class="qico">☁</span><span><b>Copias y exportación</b><small>Guardar o recuperar datos</small></span><span class="arrow">›</span></button><p class="hint">Control de Horas y Productividad · Versión 5.10.1</p></section></section>
 </main>
 <div class="completion-modal" id="completionModal" role="dialog" aria-modal="true" aria-labelledby="completionTitle"><div class="completion-box"><h3 id="completionTitle">Confirmar servicio realizado</h3><p id="completionDescription" class="hint">¿Cuántas horas realizaste finalmente?</p><label for="actualHoursInput">Horas realmente realizadas</label><input id="actualHoursInput" type="text" inputmode="decimal" autocomplete="off"><div class="completion-actions"><button class="secondary" id="cancelCompletion">Cancelar</button><button class="primary" id="confirmCompletion">Aceptar</button></div></div></div><nav class="bottom-nav"><button class="active" data-view="inicio"><span>⌂</span>Inicio</button><button data-view="registro"><span>⊕</span>Registro</button><button data-view="historial"><span>☷</span>Historial</button><button data-view="estadisticas"><span>▥</span>Estadísticas</button><button data-view="mas"><span>•••</span>Más</button></nav>
 <script>
@@ -164,15 +164,28 @@ const now=new Date(),today=new Date(now.getTime()-now.getTimezoneOffset()*60000)
 const euro=n=>Number(n||0).toLocaleString('es-ES',{style:'currency',currency:'EUR'});
 const quantity=()=>Math.max(0,Number(String($('quantity').value).replace(',','.'))||0);
 function calc(){let c=cleanConcept($('concept').value),hourly=HOURLY.has(c),fixedHours=EIGHT_HOUR_SERVICES.has(c),q=fixedHours?8:quantity(),rate=Number(rates[c]||0),units=fixedHours?1:q,amount=units*rate;$('qtyLabel').textContent=fixedHours?'Duración del servicio · horas':(hourly?'Cantidad · horas':'Cantidad · servicios');$('quantity').inputMode='decimal';$('quantity').value=fixedHours?'8':$('quantity').value;$('quantity').readOnly=fixedHours;$('unitRate').textContent=euro(rate)+(hourly?' / h':' / serv.');$('amount').textContent=euro(amount);return{c,q,hourly,rate,amount}}
-const cashSounds={service:new Audio('./saco_monedas_agitandose.wav'),paid:new Audio('./fajo_billetes_contandose.wav')};
+// Audio real desde los dos WAV incluidos en el repositorio. Sin sintetizador ni pitidos alternativos.
+const cashSounds={
+  service:new Audio(new URL('sonido_servicio_realizado.mp3?v=5.10.2',document.baseURI).href),
+  paid:new Audio(new URL('sonido_servicio_cobrado.mp3?v=5.10.2',document.baseURI).href)
+};
+Object.values(cashSounds).forEach(audio=>{audio.preload='auto';audio.load();});
 function playCashSound(kind='service'){
+  const audio=cashSounds[kind]||cashSounds.service;
   try{
-    const audio=cashSounds[kind]||cashSounds.service;
     audio.pause();
     audio.currentTime=0;
     const playback=audio.play();
-    if(playback&&typeof playback.catch==='function')playback.catch(err=>console.warn('No se pudo reproducir el sonido',err));
-  }catch(e){console.warn('Audio no disponible',e)}
+    if(playback&&typeof playback.catch==='function'){
+      playback.catch(err=>{
+        console.error('No se pudo reproducir el archivo WAV '+audio.currentSrc,err);
+        toast('No se ha podido cargar el sonido. Comprueba que los archivos WAV están en la raíz de GitHub.');
+      });
+    }
+  }catch(e){
+    console.error('Error al reproducir el archivo WAV',e);
+    toast('Error al reproducir el sonido. Comprueba los archivos WAV de GitHub.');
+  }
 }
 $('concept').onchange=()=>{$('quantity').value=EIGHT_HOUR_SERVICES.has(cleanConcept($('concept').value))?'8':'1';calc()};$('quantity').oninput=calc;
 function persist(){localStorage.setItem('horas_productividad_v1',JSON.stringify(data));render()}
