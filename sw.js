@@ -1,8 +1,8 @@
-const CACHE='control-horas-profesional-v5-10-1-20261117';
+const CACHE='control-horas-profesional-v5-10-2-20261117';
 const FILES=[
   './','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png',
-  './saco_monedas_agitandose.wav?v=5.10.1',
-  './fajo_billetes_contandose.wav?v=5.10.1'
+  './sonido_servicio_caja_retro.mp3?v=5.10.2',
+  './sonido_cobrado_kaching.mp3?v=5.10.2'
 ];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)));
