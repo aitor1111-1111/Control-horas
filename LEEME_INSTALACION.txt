@@ -1,4 +1,4 @@
-CONTROL DE HORAS Y PRODUCTIVIDAD – VERSIÓN 5.10.2
+CONTROL DE HORAS Y PRODUCTIVIDAD – VERSIÓN 5.10.3
 
 REDISEÑO VISUAL
 - Nueva maquetación moderna azul marino con acentos dorados y tarjetas de color.
@@ -56,7 +56,7 @@ NOVEDADES 5.10.1
 - Al marcar un registro como cobrado se reproduce el sonido de un fajo de billetes contándose.
 - Se incluyen los dos archivos de audio y se almacenan en la caché de la aplicación para su uso sin conexión.
 
-SONIDOS PERSONALIZADOS 5.10.2
+SONIDOS PERSONALIZADOS 5.10.3
 - Servicio realizado: sonido_servicio_caja_retro.mp3 (primer audio enviado).
 - Marcar cobrado: sonido_cobrado_kaching.mp3 (segundo audio enviado).
 - Se sustituyen los dos WAV anteriores por estos dos MP3.
