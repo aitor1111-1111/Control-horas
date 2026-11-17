@@ -1,4 +1,4 @@
-CONTROL DE HORAS Y PRODUCTIVIDAD – VERSIÓN 5.8.5
+CONTROL DE HORAS Y PRODUCTIVIDAD – VERSIÓN 5.8.6
 
 REDISEÑO VISUAL
 - Nueva maquetación moderna azul marino con acentos dorados y tarjetas de color.
@@ -22,7 +22,7 @@ ANTES DE ACTUALIZAR
 3. En GitHub abre el repositorio y selecciona Add file > Upload files.
 4. Sube los seis archivos y pulsa Commit changes.
 5. Espera a que GitHub Pages publique los cambios.
-6. Abre la aplicación en Chrome y recarga. La versión es 5.8.5.
+6. Abre la aplicación en Chrome y recarga. La versión es 5.8.6.
 
 IMPORTANTE
 No borres los datos del navegador ni desinstales la aplicación durante la actualización.
