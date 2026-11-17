@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#082747"><meta name="description" content="Control personal de horas extraordinarias y productividad">
-<meta name="application-version" content="2026.11.17.professional-5.9.8">
+<meta name="application-version" content="2026.11.17.professional-5.9.9">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><title>Control de Horas y Productividad</title>
 <style>
 :root{--navy:#062747;--navy2:#0b3e70;--blue:#1263a7;--blue2:#2586ce;--bg:#eaf2fb;--ink:#14243a;--muted:#61738c;--line:#d9e4f0;--green:#078447;--shadow:0 5px 15px #123b641b}
@@ -164,7 +164,7 @@ const now=new Date(),today=new Date(now.getTime()-now.getTimezoneOffset()*60000)
 const euro=n=>Number(n||0).toLocaleString('es-ES',{style:'currency',currency:'EUR'});
 const quantity=()=>Math.max(0,Number(String($('quantity').value).replace(',','.'))||0);
 function calc(){let c=cleanConcept($('concept').value),hourly=HOURLY.has(c),fixedHours=EIGHT_HOUR_SERVICES.has(c),q=fixedHours?8:quantity(),rate=Number(rates[c]||0),units=fixedHours?1:q,amount=units*rate;$('qtyLabel').textContent=fixedHours?'Duración del servicio · horas':(hourly?'Cantidad · horas':'Cantidad · servicios');$('quantity').inputMode='decimal';$('quantity').value=fixedHours?'8':$('quantity').value;$('quantity').readOnly=fixedHours;$('unitRate').textContent=euro(rate)+(hourly?' / h':' / serv.');$('amount').textContent=euro(amount);return{c,q,hourly,rate,amount}}
-let cashAudioContext=null;function playCashSound(kind='service'){try{const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return;cashAudioContext=cashAudioContext||new AudioCtx();if(cashAudioContext.state==='suspended')cashAudioContext.resume();const ctx=cashAudioContext,nowTime=ctx.currentTime;const notes=kind==='paid'?[1046,1318,1568,2093]:[988,1318];notes.forEach((freq,i)=>{const osc=ctx.createOscillator(),gain=ctx.createGain(),t=nowTime+i*(kind==='paid'?.13:.09);osc.type='sine';osc.frequency.setValueAtTime(freq,t);osc.frequency.exponentialRampToValueAtTime(freq*1.35,t+.09);gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(kind==='paid'?.13:.11,t+.012);gain.gain.exponentialRampToValueAtTime(.0001,t+.19);osc.connect(gain);gain.connect(ctx.destination);osc.start(t);osc.stop(t+.2)});}catch(e){console.warn('Audio no disponible',e)}}
+const cashSounds={service:new Audio('./saco_monedas_agitandose.wav'),paid:new Audio('./fajo_billetes_contandose.wav')};function playCashSound(kind='service'){try{const sound=cashSounds[kind]||cashSounds.service;sound.pause();sound.currentTime=0;const playback=sound.play();if(playback&&typeof playback.catch==='function')playback.catch(e=>console.warn('No se pudo reproducir el sonido',e));}catch(e){console.warn('Audio no disponible',e)}}
 $('concept').onchange=()=>{$('quantity').value=EIGHT_HOUR_SERVICES.has(cleanConcept($('concept').value))?'8':'1';calc()};$('quantity').oninput=calc;
 function persist(){localStorage.setItem('horas_productividad_v1',JSON.stringify(data));render()}
 function persistPlans(){localStorage.setItem('horas_productividad_planned_v1',JSON.stringify(planned));renderCalendar()}

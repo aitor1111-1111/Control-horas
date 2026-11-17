@@ -1,4 +1,4 @@
-CONTROL DE HORAS Y PRODUCTIVIDAD – VERSIÓN 5.9.8
+CONTROL DE HORAS Y PRODUCTIVIDAD – VERSIÓN 5.9.9
 
 REDISEÑO VISUAL
 - Nueva maquetación moderna azul marino con acentos dorados y tarjetas de color.
@@ -22,7 +22,7 @@ ANTES DE ACTUALIZAR
 3. En GitHub abre el repositorio y selecciona Add file > Upload files.
 4. Sube los seis archivos y pulsa Commit changes.
 5. Espera a que GitHub Pages publique los cambios.
-6. Abre la aplicación en Chrome y recarga. La versión es 5.9.8.
+6. Abre la aplicación en Chrome y recarga. La versión es 5.9.9.
 
 IMPORTANTE
 No borres los datos del navegador ni desinstales la aplicación durante la actualización.
@@ -49,3 +49,9 @@ NOVEDADES 5.9.8
 - Se eliminan los indicadores superiores de Inicio.
 - El resumen de cobros queda en orden: generado, pendiente de cobro y cobrado.
 - Debajo se muestran tres indicadores diferenciados: horas extra realizadas, productividades realizadas y festivos realizados.
+
+
+NOVEDADES 5.9.9
+- Al guardar un servicio como realizado se reproduce el sonido de un saco de monedas agitándose.
+- Al marcar un registro como cobrado se reproduce el sonido de un fajo de billetes contándose.
+- Se incluyen los dos archivos de audio y se almacenan en la caché de la aplicación para su uso sin conexión.
