@@ -195,9 +195,14 @@ function renderStats(){
  let hours=rows.filter(x=>HOURLY.has(x.concept)).reduce((s,x)=>s+Number(x.quantity??x.hours??0),0);
  let services=rows.filter(x=>!HOURLY.has(x.concept)).length;
  const amountFor=concepts=>rows.filter(x=>concepts.includes(x.concept)).reduce((a,x)=>a+Number(x.amount||0),0);
- const productivityAmount=amountFor(['Productividad','Productividad especial','Productividad agravada']);
- const festiveAmount=amountFor(['Festivo','Festivo especial']);
- $('statsSummary').innerHTML=`<div class="stats-kpis"><div class="mini-panel"><div><small>Importe total</small><b>${euro(sum)}</b></div></div><div class="mini-panel"><div><small>Horas extra acumuladas</small><b>${hours.toLocaleString('es-ES',{maximumFractionDigits:2})} h</b><small>Normales + festivas</small></div></div><div class="mini-panel"><div><small>Servicios de productividad y festivos</small><b>${services.toLocaleString('es-ES',{maximumFractionDigits:2})}</b></div></div><div class="mini-panel"><div><small>Registros realizados</small><b>${rows.length}</b></div></div></div><div class="donut-section"><h3>Totales económicos separados</h3><div class="stats-kpis"><div class="mini-panel"><div><small>Total productividad</small><b>${euro(productivityAmount)}</b><small>Normal + especial + agravada</small></div></div><div class="mini-panel"><div><small>Total festivos</small><b>${euro(festiveAmount)}</b><small>Festivo + festivo especial</small></div></div></div></div>`;
+ const productivityConcepts=['Productividad','Productividad especial','Productividad agravada'];
+ const festiveConcepts=['Festivo','Festivo especial'];
+ const productivityAmount=amountFor(productivityConcepts);
+ const festiveAmount=amountFor(festiveConcepts);
+ const overtimeAmount=amountFor(['Hora extra normal','Hora extra festiva']);
+ const productivityServices=rows.filter(x=>productivityConcepts.includes(x.concept)).length;
+ const festiveServices=rows.filter(x=>festiveConcepts.includes(x.concept)).length;
+ $('statsSummary').innerHTML=`<div class="donut-section"><h3>Horas y servicios realizados</h3><div class="stats-kpis"><div class="mini-panel"><div><small>Horas extra realizadas</small><b>${hours.toLocaleString('es-ES',{maximumFractionDigits:2})} h</b><small>Normales + festivas</small></div></div><div class="mini-panel"><div><small>Servicios de productividad</small><b>${productivityServices.toLocaleString('es-ES')}</b><small>Normal + especial + agravada</small></div></div><div class="mini-panel"><div><small>Servicios festivos</small><b>${festiveServices.toLocaleString('es-ES')}</b><small>Festivo + festivo especial</small></div></div></div></div><div class="donut-section"><h3>Importes económicos por grupo</h3><div class="stats-kpis"><div class="mini-panel"><div><small>Total horas extra</small><b>${euro(overtimeAmount)}</b><small>Normales + festivas</small></div></div><div class="mini-panel"><div><small>Total productividad</small><b>${euro(productivityAmount)}</b><small>Normal + especial + agravada</small></div></div><div class="mini-panel"><div><small>Total festivos</small><b>${euro(festiveAmount)}</b><small>Festivo + festivo especial</small></div></div></div></div><div class="stats-kpis"><div class="mini-panel"><div><small>Importe total generado</small><b>${euro(sum)}</b></div></div><div class="mini-panel"><div><small>Registros realizados</small><b>${rows.length}</b></div></div></div>`;
  const colors=['#245b86','#4b83ad','#6d9dbb','#8dabc0','#b58a54','#7c8d73','#9b7180'];
  function drawHistogram(targetId,values,total,formatter){
    const el=$(targetId); if(!el)return;
