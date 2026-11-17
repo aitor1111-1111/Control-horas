@@ -1,33 +1,62 @@
-MIS FINANZAS — publicación en GitHub Pages
+CONTROL DE HORAS Y PRODUCTIVIDAD – VERSIÓN 5.10.4
+
+REDISEÑO VISUAL
+- Nueva maquetación moderna azul marino con acentos dorados y tarjetas de color.
+- Se mantiene el escudo de la Policía Local de Las Palmas de Gran Canaria.
+- Cabecera institucional, tarjetas KPI, botones y navegación renovados.
+- Tablas mensuales con cabeceras azul marino, totales anuales destacados y diseño adaptable.
+- Se conservan los histogramas, iconos vectoriales, categorías y funcionalidades anteriores.
 
 ARCHIVOS
-- index.html: aplicación completa.
-- manifest.webmanifest: configuración instalable (PWA).
-- sw.js: caché para funcionamiento sin conexión tras la primera visita.
-- icon-192.png e icon-512.png: iconos de la aplicación.
-- sonido-dinero.mp3: audio que suena al confirmar un nuevo ingreso de trabajo o alquiler.
+Sube estos seis archivos a la raíz del repositorio GitHub Pages, sustituyendo los anteriores:
+index.html
+manifest.webmanifest
+sw.js
+icon-192.png
+icon-512.png
+LEEME_INSTALACION.txt
 
-PUBLICAR
-1. En GitHub crea un repositorio NUEVO llamado: mis-finanzas
-2. Déjalo en Public (público).
-3. Entra en el repositorio y pulsa Add file > Upload files.
-4. Sube los siete archivos de esta carpeta (puedes subir también este LEEME).
-5. Pulsa Commit changes.
-6. Ve a Settings > Pages.
-7. En Build and deployment elige Deploy from a branch.
-8. Branch: main. Folder: /(root). Pulsa Save.
-9. Espera a que GitHub Pages publique la web. La dirección será:
-   https://aitor1111-1111.github.io/mis-finanzas/
+ANTES DE ACTUALIZAR
+1. Exporta una copia JSON desde Copias de seguridad y conserva ese archivo.
+2. Descomprime el ZIP.
+3. En GitHub abre el repositorio y selecciona Add file > Upload files.
+4. Sube los seis archivos y pulsa Commit changes.
+5. Espera a que GitHub Pages publique los cambios.
+6. Abre la aplicación en Chrome y recarga. La versión es 5.10.1.
 
-INSTALAR EN ANDROID
-1. Abre esa dirección con Google Chrome.
-2. Espera a que cargue y abre el menú ⋮.
-3. Pulsa Instalar aplicación o Añadir a pantalla de inicio.
+IMPORTANTE
+No borres los datos del navegador ni desinstales la aplicación durante la actualización.
+Se conservan las claves locales horas_productividad_v1 y horas_productividad_rates_v1.
+El escudo se carga desde Wikimedia Commons, por lo que necesita conexión a Internet para mostrarse.
 
-IMPORTANTE SOBRE LOS DATOS
-- Los datos se guardan en el almacenamiento local del navegador de ese dispositivo.
-- Usa Exportar copia en Ahorros para guardar periódicamente un archivo JSON.
-- Si borras los datos de Chrome o cambias de móvil, importa la copia de seguridad.
-- La cuota del día 19 se contabiliza al abrir la aplicación después del vencimiento; no se ejecuta en segundo plano.
-- El registro automático del ahorro se realiza al abrir la app el día 23 o después de esa fecha, una vez por mes. También existe el botón de fotografía manual.
-- Los importes iniciales están a cero: introduce tus datos reales.
+NOVEDADES 5.10.1
+- El formulario de Registro permite guardar servicios como realizados o pendientes de realizar.
+- Los servicios pendientes aparecen en la pestaña Calendario y no cuentan en horas, estadísticas ni importes.
+- Se pueden indicar fecha inicial y fecha final para servicios de varios días.
+- Al marcar un servicio pendiente como realizado, se incorpora una sola vez al historial y queda pendiente de cobro.
+- La copia JSON incluye también los servicios planificados.
+
+- En Inicio, el calendario de previsión queda debajo del formulario de nuevo servicio y antes de las tablas de horas e importes. Se retiran los accesos rápidos que ocupaban ese espacio.
+
+- Inicio e Historial muestran el resumen económico acumulado: total generado, total cobrado y total pendiente de cobrar. Al cambiar el estado de un servicio a cobrado, se actualizan los tres importes automáticamente.
+
+
+NOVEDAD 5.10.1
+Se elimina el campo de fecha final. Cada registro corresponde a un único día; para servicios en días consecutivos, registra cada fecha por separado.
+
+
+NOVEDADES 5.10.1
+- Se eliminan los indicadores superiores de Inicio.
+- El resumen de cobros queda en orden: generado, pendiente de cobro y cobrado.
+- Debajo se muestran tres indicadores diferenciados: horas extra realizadas, productividades realizadas y festivos realizados.
+
+
+NOVEDADES 5.10.1
+- Al guardar un servicio como realizado se reproduce el sonido de un saco de monedas agitándose.
+- Al marcar un registro como cobrado se reproduce el sonido de un fajo de billetes contándose.
+- Se incluyen los dos archivos de audio y se almacenan en la caché de la aplicación para su uso sin conexión.
+
+SONIDOS PERSONALIZADOS 5.10.4
+- Servicio realizado: sonido_servicio_caja_retro.mp3 (primer audio enviado).
+- Marcar cobrado: sonido_cobrado_kaching.mp3 (segundo audio enviado).
+- Se sustituyen los dos WAV anteriores por estos dos MP3.
