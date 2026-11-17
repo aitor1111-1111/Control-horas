@@ -1,4 +1,4 @@
-CONTROL DE HORAS Y PRODUCTIVIDAD – VERSIÓN 5.9.0
+CONTROL DE HORAS Y PRODUCTIVIDAD – VERSIÓN 5.9.2
 
 REDISEÑO VISUAL
 - Nueva maquetación moderna azul marino con acentos dorados y tarjetas de color.
@@ -22,16 +22,18 @@ ANTES DE ACTUALIZAR
 3. En GitHub abre el repositorio y selecciona Add file > Upload files.
 4. Sube los seis archivos y pulsa Commit changes.
 5. Espera a que GitHub Pages publique los cambios.
-6. Abre la aplicación en Chrome y recarga. La versión es 5.9.0.
+6. Abre la aplicación en Chrome y recarga. La versión es 5.9.2.
 
 IMPORTANTE
 No borres los datos del navegador ni desinstales la aplicación durante la actualización.
 Se conservan las claves locales horas_productividad_v1 y horas_productividad_rates_v1.
 El escudo se carga desde Wikimedia Commons, por lo que necesita conexión a Internet para mostrarse.
 
-NOVEDADES 5.9.0
+NOVEDADES 5.9.2
 - El formulario de Registro permite guardar servicios como realizados o pendientes de realizar.
 - Los servicios pendientes aparecen en la pestaña Calendario y no cuentan en horas, estadísticas ni importes.
 - Se pueden indicar fecha inicial y fecha final para servicios de varios días.
 - Al marcar un servicio pendiente como realizado, se incorpora una sola vez al historial y queda pendiente de cobro.
 - La copia JSON incluye también los servicios planificados.
+
+- En Inicio, el calendario de previsión queda debajo del formulario de nuevo servicio y antes de las tablas de horas e importes. Se retiran los accesos rápidos que ocupaban ese espacio.
