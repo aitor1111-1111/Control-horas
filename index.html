@@ -135,7 +135,18 @@ main{max-width:1000px;padding:14px 12px 28px}.kpis{gap:9px;margin:0 0 13px}.kpi{
 
 </style>
 
-</head>
+<style>
+body:not(.vault-unlocked)>header,body:not(.vault-unlocked)>main,body:not(.vault-unlocked)>.bottom-nav{display:none!important}
+#vaultScreen{position:fixed;inset:0;z-index:100000;background:#edf2f7;display:grid;place-items:center;padding:18px;font:14px system-ui;color:#172b40}
+.vault-panel{width:min(100%,410px);background:white;border:1px solid #d6e0e9;border-radius:18px;padding:24px;box-shadow:0 12px 40px #102b441c}
+.vault-panel h1{font-size:22px;margin:8px 0}.vault-panel h2{font-size:17px}.vault-mark{font-size:30px}
+.vault-panel label{display:block;font-weight:700;margin:12px 0 5px}.vault-panel input:not([type=checkbox]){width:100%;padding:12px;border:1px solid #b9c8d7;border-radius:9px;font:inherit}
+.vault-panel button{width:100%;margin-top:12px;padding:12px;border:0;border-radius:9px;background:#183c5d;color:white;font-weight:750}
+.vault-panel .vault-link{background:transparent;color:#24577e}.vault-panel #vaultError{color:#a32626;min-height:20px}
+.vault-panel small{display:block;margin-top:18px;color:#667789;line-height:1.5}.vault-hidden{display:none!important}
+#vaultCode{display:block;overflow-wrap:anywhere;padding:12px;background:#f1f5f8;border-radius:8px;font-size:15px}
+.vault-check{display:flex!important;align-items:center;gap:8px;font-weight:500!important}.vault-check input{width:18px;height:18px}
+</style><script type="module" src="./vault-boot.js"></script></head>
 <body>
 <header class="hero"><div class="hero-inner">
 <img class="brand-mark-img" src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Logo_Polic%C3%ADa_Local_Las_Palmas_de_Gran_Canaria.jpg" alt="Escudo de la Policía Local de Las Palmas de Gran Canaria">
@@ -161,7 +172,9 @@ main{max-width:1000px;padding:14px 12px 28px}.kpis{gap:9px;margin:0 0 13px}.kpi{
 <section class="view" id="view-mas"><section class="card"><h2>••• Más opciones</h2><button class="quick" style="width:100%;margin:5px 0" onclick="showView('tarifas')"><span class="qico">⚙</span><span><b>Tarifas</b><small>Configurar importes</small></span><span class="arrow">›</span></button><button class="quick" style="width:100%;margin:5px 0" onclick="showView('copias')"><span class="qico">☁</span><span><b>Copias y exportación</b><small>Guardar o recuperar datos</small></span><span class="arrow">›</span></button><p class="hint">Control de Horas Extras, Productividad y Festivos · Versión 5.10.4</p></section></section>
 </main>
 <div class="completion-modal" id="completionModal" role="dialog" aria-modal="true" aria-labelledby="completionTitle"><div class="completion-box"><h3 id="completionTitle">Confirmar servicio realizado</h3><p id="completionDescription" class="hint">¿Cuántas horas realizaste finalmente?</p><label for="actualHoursInput">Horas realmente realizadas</label><input id="actualHoursInput" type="text" inputmode="decimal" autocomplete="off"><div class="completion-actions"><button class="secondary" id="cancelCompletion">Cancelar</button><button class="primary" id="confirmCompletion">Aceptar</button></div></div></div><nav class="bottom-nav"><button class="active" data-view="inicio"><span>⌂</span>Inicio</button><button data-view="registro"><span>⊕</span>Registro</button><button data-view="historial"><span>☷</span>Historial</button><button data-view="estadisticas"><span>▥</span>Estadísticas</button><button data-view="mas"><span>•••</span>Más</button></nav>
-<script>
+<script type="module">
+await window.__vaultReady;
+
 const $=id=>document.getElementById(id);
 // Codifica texto procedente de registros/importaciones antes de insertarlo en HTML.
 function escapeHTML(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
@@ -345,5 +358,5 @@ $('restoreFile').onchange=async e=>{
 };
 $('csv').onclick=()=>{if(!data.length)return toast('No hay registros para exportar.');let rows=[['Fecha','Tipo de servicio','Cantidad','Unidad','Tarifa','Importe','Estado','Observaciones'],...data.map(x=>[x.date,x.concept,(EIGHT_HOUR_SERVICES.has(x.concept)?Number(x.actualHours??8):(x.quantity??x.hours)),(HOURLY.has(x.concept)||EIGHT_HOUR_SERVICES.has(x.concept))?'horas':'servicios',x.rate??rates[x.concept],x.amount,x.paid?'Cobrado':'Pendiente',x.notes||''])];let csv=rows.map(r=>r.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(';')).join('\r\n');download('\ufeff'+csv,'control_horas.csv','text/csv;charset=utf-8')};
 async function updateApp(){const btn=$('updateAppBtn');if(btn){btn.disabled=true;btn.textContent='Comprobando…'}try{if(!('serviceWorker'in navigator)){toast('Abre la aplicación desde Chrome para actualizarla.');return}let reg=await navigator.serviceWorker.getRegistration();if(!reg)reg=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});await reg.update();let worker=reg.installing;if(worker){await new Promise(resolve=>{let done=false;const finish=()=>{if(!done&&(worker.state==='activated'||worker.state==='redundant')){done=true;resolve()}};worker.addEventListener('statechange',finish);setTimeout(()=>{if(!done){done=true;resolve()}},5000);finish()})}toast('Comprobación terminada. Actualizando…');setTimeout(()=>location.reload(),500)}catch(e){console.error('Error al actualizar',e);toast('No se pudo comprobar la actualización. Comprueba tu conexión.');if(btn){btn.disabled=false;btn.textContent='↻ Actualizar'}}}
-calc();render();if('serviceWorker'in navigator){window.addEventListener('load',async()=>{try{let reg=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});reg.update()}catch(e){console.warn('No se pudo actualizar el service worker',e)}})}
+window.showView=showView;window.updateApp=updateApp;calc();render();if('serviceWorker'in navigator){window.addEventListener('load',async()=>{try{let reg=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});reg.update()}catch(e){console.warn('No se pudo actualizar el service worker',e)}})}
 </script></body></html>
