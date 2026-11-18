@@ -2,6 +2,8 @@ const CACHE_NAME = 'control-horas-profesional-v5-10-6-20261118';
 const APP_FILES = [
   "./",
   "./index.html",
+  "./crypto-vault.js",
+  "./vault-boot.js",
   "./manifest.webmanifest",
   "./icon-192.png",
   "./icon-512.png",
