@@ -5,7 +5,7 @@ import './crypto-vault.js';
 const KEYS=['horas_productividad_v1','horas_productividad_rates_v1','horas_productividad_planned_v1'];
 const VAULT_KEY='control_horas_encrypted_v1';
 const native={get:Storage.prototype.getItem,set:Storage.prototype.setItem,remove:Storage.prototype.removeItem};
-let vault=null, master=null, values={}, queue=Promise.resolve(), lastActivity=Date.now(), lockTimer=null;
+let vault=null, master=null, values={}, queue=Promise.resolve(), lastActivity=Date.now(), lockTimer=null, saveError=null, revision=0, savedRevision=0;
 const $=id=>document.getElementById(id);
 function screen(){
  if($('vaultScreen')) return;
@@ -30,17 +30,32 @@ function screen(){
 }
 function showError(e){$('vaultError').textContent=e?.message||'No se ha podido abrir el almacén cifrado.';}
 function saveVault(){
- queue=queue.then(async()=>{ if(!vault||!master) return; vault=await window.LocalEncryptedVault.update(vault,master,values); native.set.call(localStorage,VAULT_KEY,JSON.stringify(vault)); });
+ const target=revision;
+ const snapshot=JSON.parse(JSON.stringify(values));
+ // Recover the queue after a failed write so later saves can still proceed.
+ queue=queue.catch(()=>{}).then(async()=>{
+  if(!vault||!master) return;
+  const next=await window.LocalEncryptedVault.update(vault,master,snapshot);
+  native.set.call(localStorage,VAULT_KEY,JSON.stringify(next));
+  vault=next; savedRevision=target; saveError=null;
+ }).catch(err=>{saveError=err;throw err});
  return queue;
+}
+async function flushVault(){
+ await queue;
+ if(saveError) throw saveError;
+ if(savedRevision<revision) { await saveVault(); await queue; }
+ if(saveError||savedRevision<revision) throw saveError||new Error('Los datos todavía no se han guardado.');
+ return true;
 }
 function installStorage(){
  Storage.prototype.getItem=function(k){return KEYS.includes(String(k))? (Object.prototype.hasOwnProperty.call(values,k)?values[k]:null):native.get.call(this,k)};
- Storage.prototype.setItem=function(k,v){if(KEYS.includes(String(k))){values[k]=String(v);saveVault().catch(showError);return;}return native.set.call(this,k,v)};
- Storage.prototype.removeItem=function(k){if(KEYS.includes(String(k))){delete values[k];saveVault().catch(showError);return;}return native.remove.call(this,k)};
+ Storage.prototype.setItem=function(k,v){if(KEYS.includes(String(k))){values[k]=String(v);revision++;saveVault().catch(showError);return;}return native.set.call(this,k,v)};
+ Storage.prototype.removeItem=function(k){if(KEYS.includes(String(k))){delete values[k];revision++;saveVault().catch(showError);return;}return native.remove.call(this,k)};
 }
 function touch(){
  lastActivity=Date.now(); clearTimeout(lockTimer);
- lockTimer=setTimeout(async()=>{try{await queue;await saveVault();await queue;location.reload()}catch(e){showError(e)}},300000);
+ lockTimer=setTimeout(async()=>{try{await flushVault();location.reload()}catch(e){showError(e)}},300000);
 }
 function activate(){
  installStorage(); document.body.classList.add('vault-unlocked'); $('vaultScreen').remove();
@@ -98,6 +113,7 @@ async function start(){
  }catch(err){showError(err)}
  };
 }
-window.__exportEncryptedBackup=async()=>{await queue;return native.get.call(localStorage,VAULT_KEY)};
+window.__vaultFlush=flushVault;
+window.__exportEncryptedBackup=async()=>{await flushVault();return native.get.call(localStorage,VAULT_KEY)};
 window.__vaultReady=(async()=>{try{await start()}catch(e){screen();showError(e);throw e}})();
 })();
