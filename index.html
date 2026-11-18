@@ -313,7 +313,7 @@ function validatePlans(items){
   if(!x||typeof x!=='object'||Array.isArray(x)||!validDate(x.start)||!Object.prototype.hasOwnProperty.call(DEFAULT_RATES,x.concept)||(x.end!==undefined&&(!validDate(x.end)||x.end<x.start)))throw Error('Hay un servicio programado no válido.');
   if(x.notes!==undefined&&(typeof x.notes!=='string'||x.notes.length>180))throw Error('Hay observaciones de calendario no válidas.');
   if(x.done!==undefined&&typeof x.done!=='boolean')throw Error('Hay un estado de calendario no válido.');
-  if(x.quantity!==undefined&&(!Number.isFinite(Number(x.quantity))||Number(x.quantity)<=0||Number(x.quantity)>1000000))throw Error('Hay una cantidad programada no válida.');
+  if(x.quantity!==undefined&&(x.quantity===null||typeof x.quantity==='boolean'||(typeof x.quantity==='string'&&x.quantity.trim()==='')||!Number.isFinite(Number(x.quantity))||Number(x.quantity)<=0||Number(x.quantity)>1000000))throw Error('Hay una cantidad programada no válida.');
   return {...x,id:(typeof x.id==='string'||typeof x.id==='number')?x.id:Date.now()+Math.random(),notes:typeof x.notes==='string'?x.notes:''};
  });
 }
