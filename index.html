@@ -301,7 +301,7 @@ function validateEntries(items){
  if(!Array.isArray(items)||items.length>10000)throw Error('La copia contiene demasiados registros o un formato incorrecto.');
  return items.map(x=>{
   if(!x||typeof x!=='object'||Array.isArray(x)||!validDate(x.date)||!Object.prototype.hasOwnProperty.call(DEFAULT_RATES,x.concept))throw Error('Hay un registro con fecha o tipo de servicio no válido.');
-  for(const key of ['amount','quantity','hours','actualHours','rate'])if(x[key]!==undefined&&(!Number.isFinite(Number(x[key]))||Math.abs(Number(x[key]))>1000000))throw Error('Hay importes o cantidades no válidos.');
+  for(const key of ['amount','quantity','hours','actualHours','rate'])if(x[key]!==undefined&&(x[key]===null||typeof x[key]==='boolean'||(typeof x[key]==='string'&&x[key].trim()==='')||!Number.isFinite(Number(x[key]))||Math.abs(Number(x[key]))>1000000))throw Error('Hay importes o cantidades no válidos.');
   if(x.notes!==undefined&&(typeof x.notes!=='string'||x.notes.length>180))throw Error('Hay observaciones no válidas.');
   if(x.paid!==undefined&&typeof x.paid!=='boolean')throw Error('Hay un estado de cobro no válido.');
   return {...x,id:(typeof x.id==='string'||typeof x.id==='number')?x.id:Date.now()+Math.random(),notes:typeof x.notes==='string'?x.notes:''};
