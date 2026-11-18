@@ -182,8 +182,8 @@ const quantity=()=>Math.max(0,Number(String($('quantity').value).replace(',','.'
 function calc(){let c=cleanConcept($('concept').value),hourly=HOURLY.has(c),fixedHours=EIGHT_HOUR_SERVICES.has(c),q=fixedHours?8:quantity(),rate=Number(rates[c]||0),units=fixedHours?1:q,amount=units*rate;$('qtyLabel').textContent=fixedHours?'Duración del servicio · horas':(hourly?'Cantidad · horas':'Cantidad · servicios');$('quantity').inputMode='decimal';$('quantity').value=fixedHours?'8':$('quantity').value;$('quantity').readOnly=fixedHours;$('unitRate').textContent=euro(rate)+(hourly?' / h':' / serv.');$('amount').textContent=euro(amount);return{c,q,hourly,rate,amount}}
 // Audio real desde los dos WAV incluidos en el repositorio. Sin sintetizador ni pitidos alternativos.
 const cashSounds={
-  service:new Audio(new URL('sonido_servicio_caja_retro.mp3?v=5.10.2',document.baseURI).href),
-  paid:new Audio(new URL('sonido_cobrado_kaching.mp3?v=5.10.2',document.baseURI).href)
+  service:new Audio(new URL('sonido-dinero.mp3?v=5.10.5',document.baseURI).href),
+  paid:new Audio(new URL('sonido_cobrado_kaching.mp3?v=5.10.5',document.baseURI).href)
 };
 Object.values(cashSounds).forEach(audio=>{audio.preload='auto';audio.load();});
 function playCashSound(kind='service'){
@@ -295,7 +295,54 @@ function showView(name){document.querySelectorAll('.view').forEach(v=>v.classLis
 document.querySelectorAll('.bottom-nav button').forEach(b=>b.onclick=()=>showView(b.dataset.view));$('search').oninput=renderHistory;$('historyYear').onchange=renderHistory;$('statsYear').onchange=renderStats;$('statsMonth').onchange=renderStats;
 function download(content,name,type){let blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)}
 $('backup').onclick=()=>download(JSON.stringify({app:'Control de Horas y Productividad',version:5.91,exportedAt:new Date().toISOString(),entries:data,planned,rates},null,2),'copia_control_horas.json','application/json');
-$('restoreBtn').onclick=()=>$('restoreFile').click();$('restoreFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let obj=JSON.parse(await f.text()),entries=Array.isArray(obj)?obj:obj.entries;if(!Array.isArray(entries))throw Error('Formato incorrecto');if(confirm('La copia sustituirá los registros actuales. ¿Quieres continuar?')){data=entries;if(obj.rates&&typeof obj.rates==='object')rates={...DEFAULT_RATES,...obj.rates};if(Array.isArray(obj.planned)){planned=obj.planned;localStorage.setItem('horas_productividad_planned_v1',JSON.stringify(planned));}persist();localStorage.setItem('horas_productividad_rates_v1',JSON.stringify(rates));renderCalendar();toast('Copia restaurada correctamente.')}}catch(err){toast('No se ha podido leer la copia. Comprueba el archivo.')}e.target.value=''};
+$('restoreBtn').onclick=()=>$('restoreFile').click();
+function validDate(value){return typeof value==='string'&&/^\\d{4}-\\d{2}-\\d{2}$/.test(value)&&!Number.isNaN(Date.parse(value+'T12:00:00'))}
+function validateEntries(items){
+ if(!Array.isArray(items)||items.length>10000)throw Error('La copia contiene demasiados registros o un formato incorrecto.');
+ return items.map(x=>{
+  if(!x||typeof x!=='object'||Array.isArray(x)||!validDate(x.date)||!Object.prototype.hasOwnProperty.call(DEFAULT_RATES,x.concept))throw Error('Hay un registro con fecha o tipo de servicio no válido.');
+  for(const key of ['amount','quantity','hours','actualHours','rate'])if(x[key]!==undefined&&(!Number.isFinite(Number(x[key]))||Math.abs(Number(x[key]))>1000000))throw Error('Hay importes o cantidades no válidos.');
+  if(x.notes!==undefined&&(typeof x.notes!=='string'||x.notes.length>180))throw Error('Hay observaciones no válidas.');
+  if(x.paid!==undefined&&typeof x.paid!=='boolean')throw Error('Hay un estado de cobro no válido.');
+  return {...x,id:(typeof x.id==='string'||typeof x.id==='number')?x.id:Date.now()+Math.random(),notes:typeof x.notes==='string'?x.notes:''};
+ });
+}
+function validatePlans(items){
+ if(!Array.isArray(items)||items.length>5000)throw Error('La copia contiene demasiados servicios programados.');
+ return items.map(x=>{
+  if(!x||typeof x!=='object'||Array.isArray(x)||!validDate(x.start)||!Object.prototype.hasOwnProperty.call(DEFAULT_RATES,x.concept)||(x.end!==undefined&&(!validDate(x.end)||x.end<x.start)))throw Error('Hay un servicio programado no válido.');
+  if(x.notes!==undefined&&(typeof x.notes!=='string'||x.notes.length>180))throw Error('Hay observaciones de calendario no válidas.');
+  if(x.done!==undefined&&typeof x.done!=='boolean')throw Error('Hay un estado de calendario no válido.');
+  if(x.quantity!==undefined&&(!Number.isFinite(Number(x.quantity))||Number(x.quantity)<=0||Number(x.quantity)>1000000))throw Error('Hay una cantidad programada no válida.');
+  return {...x,id:(typeof x.id==='string'||typeof x.id==='number')?x.id:Date.now()+Math.random(),notes:typeof x.notes==='string'?x.notes:''};
+ });
+}
+$('restoreFile').onchange=async e=>{
+ const file=e.target.files&&e.target.files[0];if(!file)return;
+ try{
+  if(file.size>5*1024*1024)throw Error('El archivo supera el límite de 5 MB.');
+  const obj=JSON.parse(await file.text()),legacy=Array.isArray(obj);
+  if(!legacy&&(!obj||typeof obj!=='object'||Array.isArray(obj)))throw Error('Formato de copia incorrecto.');
+  const entries=validateEntries(legacy?obj:obj.entries);
+  const nextPlans=legacy?planned:(obj.planned===undefined?planned:validatePlans(obj.planned));
+  const nextRates={...DEFAULT_RATES};
+  if(!legacy&&obj.rates!==undefined){
+   if(!obj.rates||typeof obj.rates!=='object'||Array.isArray(obj.rates))throw Error('Las tarifas de la copia no son válidas.');
+   for(const [key,value] of Object.entries(obj.rates)){
+    if(!Object.prototype.hasOwnProperty.call(DEFAULT_RATES,key)||!Number.isFinite(Number(value))||Number(value)<0||Number(value)>1000000)throw Error('La copia contiene una tarifa no válida.');
+    nextRates[key]=Number(value);
+   }
+  }
+  if(confirm('La copia sustituirá los registros actuales. ¿Quieres continuar?')){
+   data=entries;planned=nextPlans;rates=nextRates;
+   localStorage.setItem('horas_productividad_v1',JSON.stringify(data));
+   localStorage.setItem('horas_productividad_planned_v1',JSON.stringify(planned));
+   localStorage.setItem('horas_productividad_rates_v1',JSON.stringify(rates));
+   render();toast('Copia restaurada correctamente.');
+  }
+ }catch(err){console.warn('Copia rechazada:',err);toast(err.message||'No se ha podido leer la copia. Comprueba el archivo.');}
+ e.target.value='';
+};
 $('csv').onclick=()=>{if(!data.length)return toast('No hay registros para exportar.');let rows=[['Fecha','Tipo de servicio','Cantidad','Unidad','Tarifa','Importe','Estado','Observaciones'],...data.map(x=>[x.date,x.concept,(EIGHT_HOUR_SERVICES.has(x.concept)?Number(x.actualHours??8):(x.quantity??x.hours)),(HOURLY.has(x.concept)||EIGHT_HOUR_SERVICES.has(x.concept))?'horas':'servicios',x.rate??rates[x.concept],x.amount,x.paid?'Cobrado':'Pendiente',x.notes||''])];let csv=rows.map(r=>r.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(';')).join('\r\n');download('\ufeff'+csv,'control_horas.csv','text/csv;charset=utf-8')};
 async function updateApp(){const btn=$('updateAppBtn');if(btn){btn.disabled=true;btn.textContent='Comprobando…'}try{if(!('serviceWorker'in navigator)){toast('Abre la aplicación desde Chrome para actualizarla.');return}let reg=await navigator.serviceWorker.getRegistration();if(!reg)reg=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});await reg.update();let worker=reg.installing;if(worker){await new Promise(resolve=>{let done=false;const finish=()=>{if(!done&&(worker.state==='activated'||worker.state==='redundant')){done=true;resolve()}};worker.addEventListener('statechange',finish);setTimeout(()=>{if(!done){done=true;resolve()}},5000);finish()})}toast('Comprobación terminada. Actualizando…');setTimeout(()=>location.reload(),500)}catch(e){console.error('Error al actualizar',e);toast('No se pudo comprobar la actualización. Comprueba tu conexión.');if(btn){btn.disabled=false;btn.textContent='↻ Actualizar'}}}
 calc();render();if('serviceWorker'in navigator){window.addEventListener('load',async()=>{try{let reg=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});reg.update()}catch(e){console.warn('No se pudo actualizar el service worker',e)}})}
