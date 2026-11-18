@@ -60,7 +60,7 @@ function touch(){
 function activate(){
  installStorage(); document.body.classList.add('vault-unlocked'); $('vaultScreen').remove();
  ['pointerdown','keydown','touchstart','click'].forEach(ev=>document.addEventListener(ev,touch,{passive:true}));
- document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&Date.now()-lastActivity>=300000){location.reload()}else touch()});
+ document.addEventListener('visibilitychange',async()=>{if(document.visibilityState==='visible'&&Date.now()-lastActivity>=300000){try{await flushVault();location.reload()}catch(e){showError(e)}}else touch()});
  touch();
 }
 async function finishUnlock(result){
