@@ -51,6 +51,7 @@ function activate(){
 async function finishUnlock(result){
  master=result.masterRaw; values=result.data;
  for(const k of KEYS) if(typeof values[k]!=='string') values[k]=null;
+ for(const k of KEYS) native.remove.call(localStorage,k);
  activate();
 }
 async function start(){
@@ -97,5 +98,6 @@ async function start(){
  }catch(err){showError(err)}
  };
 }
-window.__vaultReady=(async()=>{try{await start()}catch(e){screen();showError(e)}})();
+window.__exportEncryptedBackup=async()=>{await queue;return native.get.call(localStorage,VAULT_KEY)};
+window.__vaultReady=(async()=>{try{await start()}catch(e){screen();showError(e);throw e}})();
 })();
