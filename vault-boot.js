@@ -42,9 +42,9 @@ function saveVault(){
  return queue;
 }
 async function flushVault(){
- await queue;
- if(saveError) throw saveError;
- if(savedRevision<revision) { await saveVault(); await queue; }
+ // A rejected previous write must not permanently block future retries.
+ try{await queue}catch(e){}
+ if(saveError||savedRevision<revision){await saveVault();await queue;}
  if(saveError||savedRevision<revision) throw saveError||new Error('Los datos todavía no se han guardado.');
  return true;
 }
