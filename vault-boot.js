@@ -28,7 +28,7 @@ function screen(){
  <small>El cifrado se realiza en este navegador. No envíes tu contraseña ni tu código por chat.</small></div>`;
  document.body.append(el);
 }
-function showError(e){$('vaultError').textContent=e?.message||'No se ha podido abrir el almacén cifrado.';}
+function showError(e){const message=e?.message||'No se ha podido guardar el almacén cifrado.';const el=$('vaultError');if(el){el.textContent=message;return;}console.error('Error del almacén cifrado:',e);window.dispatchEvent(new CustomEvent('vault-error',{detail:message}));}
 function saveVault(){
  const target=revision;
  const snapshot=JSON.parse(JSON.stringify(values));
