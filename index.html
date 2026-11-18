@@ -335,6 +335,20 @@ $('restoreFile').onchange=async e=>{
  try{
   if(file.size>5*1024*1024)throw Error('El archivo supera el límite de 5 MB.');
   const obj=JSON.parse(await file.text()),legacy=Array.isArray(obj);
+  if(obj&&obj.app==='Control de Horas cifrado'&&obj.vault){
+   let unlocked;
+   const secret=prompt('Introduce la contraseña de la copia cifrada:');
+   if(secret===null)throw Error('Restauración cancelada.');
+   try{unlocked=await window.LocalEncryptedVault.unlockWithPassword(obj.vault,secret)}
+   catch(first){const recovery=prompt('Contraseña incorrecta. Introduce el código de recuperación:');if(recovery===null)throw Error('Restauración cancelada.');unlocked=await window.LocalEncryptedVault.unlockWithRecovery(obj.vault,recovery)}
+   const restored=unlocked.data;
+   for(const key of ['horas_productividad_v1','horas_productividad_rates_v1','horas_productividad_planned_v1']){
+    if(restored[key]!==null&&restored[key]!==undefined&&typeof restored[key]!=='string')throw Error('La copia cifrada contiene datos no válidos.');
+   }
+   localStorage.setItem('control_horas_encrypted_v1',JSON.stringify(obj.vault));
+   toast('Copia cifrada restaurada. La aplicación se reiniciará.');
+   setTimeout(()=>location.reload(),500);return;
+  }
   if(!legacy&&(!obj||typeof obj!=='object'||Array.isArray(obj)))throw Error('Formato de copia incorrecto.');
   const entries=validateEntries(legacy?obj:obj.entries);
   const nextPlans=legacy?planned:(obj.planned===undefined?planned:validatePlans(obj.planned));
